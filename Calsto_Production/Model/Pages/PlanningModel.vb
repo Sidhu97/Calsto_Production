@@ -5,12 +5,13 @@ Public Class PlanningModel
     Public Property PROJECTNO As String
     Public Property Customer As String
 
-    ' Sub-table for DataGrid rows
-    Public Class PlanningSideDgModel
-        Implements INotifyPropertyChanged
 
-        Public Property WID As String
-        Public Property BOMNo As String
+End Class
+
+' Sub-table for DataGrid rows
+Public Class PlanningSideDgModel
+    Public Property WID As String
+    Public Property BOMNo As String
         Public Property BOMName As String
         Public Property Customer As String
         Public Property Description As String
@@ -24,27 +25,7 @@ Public Class PlanningModel
         Public Property DispatchPending As Integer
         Public Property DispatchDate As Nullable(Of Date)
 
-        ' Checkbox property
-        Private _IsSelectedToCreate As Boolean
-        Public Property IsSelectedToCreate As Boolean
-            Get
-                Return _IsSelectedToCreate
-            End Get
-            Set(value As Boolean)
-                If _IsSelectedToCreate <> value Then
-                    _IsSelectedToCreate = value
-                    OnPropertyChanged(NameOf(IsSelectedToCreate))
-                End If
-            End Set
-        End Property
-
-        ' Notify property changes to UI
-        Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-        Protected Sub OnPropertyChanged(propertyName As String)
-            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-        End Sub
     End Class
-End Class
 
 ' Separate Job Card Model
 Public Class JobCardModel

@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:control="clr-namespace:FilterDataGrid;assembly=FilterDataGrid"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Dashboard"
-      Title="Dashboard" Background="#FAFAFA" FontFamily="Segoe UI" FontSize="11" Height="633">
+      Title="Dashboard" Background="#FAFAFA" FontFamily="Segoe UI" FontSize="11" >
 
     <Page.Resources>
         <!-- Header style -->
@@ -46,15 +46,15 @@
         <!-- Highlight blue for ProjectStatus Open -->
         <Style x:Key="ProjectStatusStyle" TargetType="TextBlock" BasedOn="{StaticResource CellTextStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="OPEN">
-                    <Setter Property="Foreground" Value="orange"/>
+                <DataTrigger Binding="{Binding Project_Status}" Value="OPEN">
+                    <Setter Property="Foreground" Value="DarkCyan"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="HOLD">
+                <DataTrigger Binding="{Binding Project_Status}" Value="HOLD">
                     <Setter Property="Foreground" Value="RED"/>
                     <Setter Property="FontWeight" Value="SemiBold"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="CLOSED">
+                <DataTrigger Binding="{Binding Project_Status}" Value="CLOSED">
                     <Setter Property="Foreground" Value="PURPLE"/>
                     <Setter Property="FontWeight" Value="SemiBold"/>
                 </DataTrigger>
@@ -69,16 +69,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <control:FilterDataGrid  x:Name="dataGrid" ItemsSource="{Binding OperationsList}"
-                                 AutoGenerateColumns="False"
-                                 SelectedItem="{Binding SelectedOperation, Mode=TwoWay}"
+        <control:FilterDataGrid  x:Name="DashDG" AutoGenerateColumns="False"
+                                 SelectionChanged="dgProjects_Sel_Changed"
                                  ShowRowsCount="True"
                                  ShowStatusBar="True"
                                  FilterLanguage="English"
                                  RowHeight="22"
                                  FontSize="11"
                                  ColumnHeaderHeight="28"
-                                 Margin="10,10,0,10"
+                                 CanUserAddRows="False"
+                                 Margin="0,0,0,0"
                                  AlternationCount="2"
                                  RowBackground="White"
                                  AlternatingRowBackground="#F8F9FB"
@@ -86,7 +86,7 @@
                                  CanUserSortColumns="True"
                                  Grid.Column="0">
             <control:FilterDataGrid.Columns>
-                <control:DataGridTextColumn Header="BOM No." Binding="{Binding BOMNo}" Width="110" IsColumnFiltered="True">
+                <control:DataGridTextColumn Header="BOM No." Binding="{Binding BOM_No}" Width="80" IsColumnFiltered="True">
                     <control:DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource CellTextStyle}">
                             <Setter Property="FontWeight" Value="Bold"/>
@@ -94,17 +94,17 @@
                         </Style>
                     </control:DataGridTextColumn.ElementStyle>
                 </control:DataGridTextColumn>
-                <control:DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="120" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="PO No" Binding="{Binding PONo}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat=\{0:dd-MM-yyyy\}}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Customer" Binding="{Binding Customer_Name}" Width="350" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="PO No" Binding="{Binding PO_No}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Booking Date" Binding="{Binding Booking_Date, StringFormat=\{0:dd-MM-yyyy\}}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                 <control:DataGridTextColumn Header="Sales" Binding="{Binding Sales}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="Total WIDs" Binding="{Binding TotalWIDs}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="Pending WIDs" Binding="{Binding PendingWIDs}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="PO Dispatch Date" Binding="{Binding PODispatchDate, StringFormat=\{0:dd-MM-yyyy\}}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="Dispatch Date" Binding="{Binding DispatchDate, StringFormat=\{0:dd-MM-yyyy\}}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="Project Status" Binding="{Binding ProjectStatus}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource ProjectStatusStyle}" />
-                <control:DataGridTextColumn Header="Due Date" Binding="{Binding DueDate}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Total WIDs" Binding="{Binding Total_WIDs}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Pending WIDs" Binding="{Binding Pending_WIDs}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="PO Dispatch Date" Binding="{Binding PO_Dispatch_Date, StringFormat=\{0:dd-MM-yyyy\}}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Dispatch Date" Binding="{Binding Dispatch_Date, StringFormat=\{0:dd-MM-yyyy\}}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Project Status" Binding="{Binding Project_Status}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource ProjectStatusStyle}" />
+                <control:DataGridTextColumn Header="Due Date" Binding="{Binding Due_Date}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
             </control:FilterDataGrid.Columns>
         </control:FilterDataGrid>
 
@@ -114,11 +114,11 @@
         <Grid Grid.Column="2" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
             <!-- Details DataGrid -->
-            <DataGrid ItemsSource="{Binding FilteredDetailsList}" 
+            <DataGrid x:Name="SideDG"
                       AutoGenerateColumns="False" 
                       CanUserAddRows="False" 
                       IsReadOnly="True" 
@@ -127,7 +127,8 @@
                       ColumnHeaderHeight="28" 
                       AlternatingRowBackground="#F8F9FB" 
                       HeadersVisibility="Column" 
-                      Margin="0,0,0,12">
+                      Margin="0,0,0,12"
+                      Grid.Row="1">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Field" Binding="{Binding Field}" Width="*" />
                     <DataGridTextColumn Header="Description" Binding="{Binding Detail}" Width="2*" />
@@ -135,7 +136,7 @@
             </DataGrid>
 
             <!-- Stock IN Transaction Panel -->
-            <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Grid.Row="1">
+            <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Grid.Row="0">
                 <StackPanel>
                     <TextBlock Text="Project Details" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
 
@@ -155,7 +156,7 @@
 
 
                         <TextBlock Text="PO Date:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                        <DatePicker Grid.Row="2" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8" SelectedDate="{Binding SelectedOperation.PODispatchDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DatePicker x:Name="dpDispatchDate" Grid.Row="2" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8" />
 
                         <TextBlock Text="PO Date:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
                         <DatePicker Grid.Row="3" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8"/>

@@ -15,7 +15,7 @@
             <GradientStop Color="white" Offset="1"/>
         </LinearGradientBrush>
 
-        <DropShadowEffect x:Key="ModernShadow" BlurRadius="10" ShadowDepth="0" Color="#33000000"/>
+        <DropShadowEffect x:Key="ModernShadow" BlurRadius="10" ShadowDepth="1" Color="#33000000"/>
 
         <Style x:Key="ModernIconButton" TargetType="Button">
             <Setter Property="Background" Value="#4CFFFFFF"/>
@@ -103,7 +103,7 @@
 
         <!-- TAB SECTION -->
         <Grid Grid.Row="1">
-            <Border Margin="5" Background="White" CornerRadius="16" BorderBrush="#E0E0E0" BorderThickness="1" Effect="{StaticResource ModernShadow}">
+            <Border Margin="5" Background="White"  BorderBrush="#E0E0E0" BorderThickness="1" Effect="{StaticResource ModernShadow}">
                 <TabControl Background="Transparent" BorderThickness="0" Padding="6" Margin="0,0,-5,0" FontFamily="Segoe UI" FontSize="15">
                     <TabItem Header="DASHBOARD" FontSize="9" FontWeight="Bold">
                         <Frame Source="Pages/Dashboard.xaml" NavigationUIVisibility="Hidden"/>
@@ -112,7 +112,7 @@
                         <Frame Source="Pages/Planning.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="FORMING" FontSize="9" FontWeight="Bold">
-                        <Frame Source="Pages/Job.xaml" NavigationUIVisibility="Hidden"/>
+                        <Frame Source="Pages/Forming.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="WELDING" FontSize="9" FontWeight="Bold">
                         <Grid Background="White"/>

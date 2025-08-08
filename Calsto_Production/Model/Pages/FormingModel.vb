@@ -1,0 +1,17 @@
+﻿Public Class FormingModel
+    Public Property BOMName As String
+    Public Property JC_no As String
+    Public Property PartNumber As String
+    Public Property Description As String
+    Public Property Length As Decimal
+    Public Property Width As Decimal
+    Public Property Thick As Decimal
+    Public Property UnitWeight As Decimal
+    Public Property TotalWeight As Decimal
+    Public Property Colour As String
+    Public Property BOMQty As Integer
+    Public Property ProducedQty As Integer
+    Public Property BalanceQty As Integer
+    Public Property DispatchDate As Date?
+    Public Property DueDate As Integer
+End Class

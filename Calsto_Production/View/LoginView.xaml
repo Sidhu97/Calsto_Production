@@ -76,9 +76,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Margin="30,0,0,0">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="#2A000000"/>
-                    </Border.Effect>
+                    
 
                     <Grid Margin="-9,-2,-8,0">
                         <Grid.RowDefinitions>

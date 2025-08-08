@@ -63,7 +63,7 @@ Class LoginView
     End Sub
 
     Private Sub btnLogin_Click(sender As Object, e As RoutedEventArgs) Handles btnLogin.Click
-        lblError.Visibility = Visibility.Collapsed
+        lblError.Visibility = Visibility.Hidden
 
         If String.IsNullOrWhiteSpace(txtUsername.Text) OrElse
        (If(isPasswordVisible, String.IsNullOrWhiteSpace(txtPasswordVisible.Text), String.IsNullOrWhiteSpace(txtPassword.Password))) Then
@@ -81,7 +81,7 @@ Class LoginView
             MessageBox.Show($"Hi, {user.Name} ({user.Role})", "Login Successful", MessageBoxButton.OK, MessageBoxImage.Information)
 
             ' ✅ Pass user directly
-            Dim homeWindow As New HomeView(user)
+            Dim homeWindow As New HomeView()
             homeWindow.Show()
             Me.Close()
         Else
