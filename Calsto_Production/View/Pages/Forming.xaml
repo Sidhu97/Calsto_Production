@@ -78,7 +78,7 @@
             x:Name="ProjDG"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
-            
+            SelectionChanged="FormProj_Sel_Changed"
             ShowRowsCount="True"
             ShowStatusBar="True"
             FilterLanguage="English"
@@ -140,7 +140,6 @@
             <control:FilterDataGrid 
     x:Name="FormDG"
     SelectionMode="Single"
-
     AutoGenerateColumns="False" 
     CanUserAddRows="False"
     ShowRowsCount="True"
@@ -168,7 +167,6 @@
                             </Style>
                         </control:DataGridTextColumn.ElementStyle>
                     </control:DataGridTextColumn>
-
                     <control:DataGridTextColumn Header="Part Number" Binding="{Binding PartNumber}" Width="140" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="280" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />

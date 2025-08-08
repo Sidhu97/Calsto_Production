@@ -1,4 +1,8 @@
 ﻿Public Class FormingModel
+
+    Public Property WID As String
+    Public Property BOMNo As String
+    Public Property Customer As String
     Public Property BOMName As String
     Public Property JC_no As String
     Public Property PartNumber As String

@@ -7,19 +7,44 @@ Public Class FormingDBHelper
     Private Shared ReadOnly conString As String = ConfigurationManager.ConnectionStrings("Db_Server").ConnectionString
 
 
+#Region "Project List"
+    Public Shared Function GetProjectNO() As List(Of PlanningModel)
+        Dim Projectlist As New List(Of PlanningModel)
+        Using con As New SqlConnection(conString)
+            con.Open()
+            Using cmd As New SqlCommand("SELECT * FROM PRO_list", con)
+                Using rdr = cmd.ExecuteReader()
+                    While rdr.Read()
+                        Projectlist.Add(New PlanningModel With {
+                            .PROJECTNO = rdr("PRO_No").ToString(),
+                            .Customer = rdr("Customer").ToString()
+                        })
+                    End While
+                End Using
+            End Using
+        End Using
+        Return Projectlist
+    End Function
+
+#End Region
+
 #Region "Get Forming Jobs"
-    Public Shared Function GetFormingJobs() As List(Of FormingModel)
+    Public Shared Function GetFormingJobs(proNo As String) As List(Of FormingModel)
         Dim formingJobs As New List(Of FormingModel)
 
         Using con As New SqlConnection(conString)
-            Dim query As String = "SELECT * FROM V_JOB_FORMING"
+            ' Add WHERE clause to use the parameter
+            Dim query As String = "SELECT * FROM V_JOB_FORMING WHERE [BOM No.] = @BOMNo"
             Dim cmd As New SqlCommand(query, con)
+            cmd.Parameters.AddWithValue("@BOMNo", proNo)
 
             Try
                 con.Open()
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
                 While reader.Read()
                     Dim job As New FormingModel With {
+                        .WID = reader("WID").ToString(),
+                        .BOMNo = reader("BOM No.").ToString(),
                         .BOMName = reader("BOM Name").ToString(),
                         .JC_no = reader("JC_no").ToString(),
                         .PartNumber = reader("Part Number").ToString(),
@@ -45,6 +70,7 @@ Public Class FormingDBHelper
 
         Return formingJobs
     End Function
+
 #End Region
 
 End Class
