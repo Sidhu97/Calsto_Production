@@ -2,14 +2,14 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:control="clr-namespace:FilterDataGrid;assembly=FilterDataGrid"
-     xmlns:local="clr-namespace:TACKERCALSTO.Converters"
+     
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Planning "
       Title="Planning" Background="#FAFAFA" FontFamily="Segoe UI" FontSize="11" av:DesignHeight="594.701">
 
     <Page.Resources>
 
 
-        <local:JobCardToEnabledConverter x:Key="JobCardToEnabledConverter"/>
+        <!--<local:JobCardToEnabledConverter x:Key="JobCardToEnabledConverter"/>-->
         <!-- Header style -->
         <Style x:Key="HeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -66,13 +66,17 @@
         </Style>
     </Page.Resources>
 
-    <Grid Margin="16">
+
+        
+    </Page>
+
+        <!--<Grid Margin="16">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="4.5*"/>
         </Grid.ColumnDefinitions>
-        <!-- Master Data Grid -->
+        --><!-- Master Data Grid --><!--
         <control:FilterDataGrid 
             x:Name="MasterDG"
             ItemsSource="{Binding PlannigList}"
@@ -109,10 +113,10 @@
             </control:FilterDataGrid.Columns>
         </control:FilterDataGrid>
 
-        <!-- Splitter -->
+        --><!-- Splitter --><!--
         <GridSplitter Grid.Column="1" Width="10" Background="#ddd" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-        <!-- Details and StockIn Panel -->
+        --><!-- Details and StockIn Panel --><!--
         <Grid Grid.Column="2" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
@@ -121,10 +125,10 @@
             </Grid.RowDefinitions>
 
 
-            <!-- Details DataGrid -->
+            --><!-- Details DataGrid -->
 
 
-            <!-- Details DataGrid -->
+            <!-- Details DataGrid --><!--
             <DockPanel Grid.Row="0" HorizontalAlignment="Right">
 
                 <CheckBox x:Name="SelectAllFilteredCheckBox" Content="Select all-Filtered" Width="130" VerticalAlignment="Center" Click="SelectAllFilteredCheckBox_Click"/>
@@ -132,7 +136,7 @@
             </DockPanel>
 
 
-            <!-- Details DataGrid -->
+            --><!-- Details DataGrid --><!--
             <control:FilterDataGrid 
     x:Name="WIDBOMDG"
     ItemsSource="{Binding PlanningSideDgList}" 
@@ -261,4 +265,4 @@
 
         </Grid>
     </Grid>
-</Page>
+</Page>-->
