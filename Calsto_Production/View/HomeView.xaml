@@ -133,7 +133,7 @@
                         <Grid Background="White"/>
                     </TabItem>
                     <TabItem Header="PACKING" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                        <Frame Source="Pages/Packing.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="DISPATCH" FontSize="9" FontWeight="Bold">
                         <Grid Background="White"/>
