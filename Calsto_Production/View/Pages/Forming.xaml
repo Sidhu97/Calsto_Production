@@ -2,8 +2,13 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:control="clr-namespace:FilterDataGrid;assembly=FilterDataGrid"
-      xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Forming"
-      Title="Forming" Background="#FAFAFA" FontFamily="Segoe UI" FontSize="11" av:DesignHeight="594.701">
+      xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      mc:Ignorable="av" x:Class="Forming"
+      Title="Forming" Background="#FAFAFA" 
+    FontFamily="Segoe UI" 
+    FontSize="11" 
+    av:DesignHeight="594.701">
 
     <Page.Resources>
 

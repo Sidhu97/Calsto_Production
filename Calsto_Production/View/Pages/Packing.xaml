@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:control="clr-namespace:FilterDataGrid;assembly=FilterDataGrid"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Packing"
-      Title="Packing" Background="#FAFAFA" FontFamily="Segoe UI" FontSize="11" av:DesignHeight="594.701">
+      Title="Packing" Background="#FAFAFA" FontFamily="Segoe UI" FontSize="11" Height="922">
 
     <Page.Resources>
 

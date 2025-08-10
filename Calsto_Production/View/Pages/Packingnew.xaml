@@ -1,0 +1,158 @@
+﻿<Page x:Class="Calsto_Production.Packingnew"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:Calsto_Production"
+      Title="Bundle Manager" Height="900" Width="1600"
+      Background="#F4F6F8">
+
+    <Page.Resources>
+        <!-- Modern Styles for Industrial Grade UI -->
+        <Style TargetType="Button" x:Key="ModernButton">
+            <Setter Property="Background" Value="#007BFF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Direction="315" ShadowDepth="2" BlurRadius="4" Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0056B3"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#004085"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="AlternatingRowBackground" Value="#F9F9F9"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EDEDED"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Direction="315" ShadowDepth="1" BlurRadius="3" Opacity="0.1"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#333333"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Direction="315" ShadowDepth="1" BlurRadius="2" Opacity="0.1"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="LabelBold">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+        </Style>
+    </Page.Resources>
+
+    <DockPanel Margin="10">
+
+        <!-- Top Controls -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0 0 0 10" VerticalAlignment="Center">
+            <TextBlock Text="Select Project:" Style="{StaticResource LabelBold}"/>
+            <ComboBox x:Name="cmbProject" Width="220" SelectionChanged="cmbProject_SelectionChanged"/>
+
+            <TextBlock Text="Bundle Type:" Style="{StaticResource LabelBold}" Margin="20,0,5,0"/>
+            <ComboBox x:Name="cmbBundleType" Width="160" SelectionChanged="cmbBundleType_SelectionChanged"/>
+
+            <Button x:Name="btnCreateBundle" Content="Create Bundle" Width="140" Margin="20,0,0,0" Style="{StaticResource ModernButton}" Background="#28A745" Click="btnCreateBundle_Click"/>
+            <Button x:Name="btnSave" Content="💾 Save" Width="100" Margin="5,0" Style="{StaticResource ModernButton}" Click="btnSave_Click"/>
+            <Button x:Name="btnPrintPreview" Content="🖨 Print Preview" Width="140" Margin="5,0" Style="{StaticResource ModernButton}" Background="#FFC107" Foreground="Black" Click="btnPrintPreview_Click"/>
+        </StackPanel>
+
+        <!-- Main Grid Layout -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Table 1: Available Components -->
+            <GroupBox Header="Available Component List" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="5">
+                <DataGrid x:Name="dgAvailableComponents">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Sr#" Binding="{Binding SrNo}" Width="40"/>
+                        <DataGridTextColumn Header="WID" Binding="{Binding WID}" Width="100"/>
+                        <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="150"/>
+                        <DataGridTextColumn Header="Location" Binding="{Binding CustomerLocation}" Width="120"/>
+                        <DataGridTextColumn Header="Project No" Binding="{Binding ProjectNo}" Width="100"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
+                        <DataGridTextColumn Header="Qty Available" Binding="{Binding QtyAvailable}" Width="80"/>
+                        <DataGridTextColumn Header="Color" Binding="{Binding Color}" Width="80"/>
+                        <DataGridTextColumn Header="ReadyToPack" Binding="{Binding ReadyToPackQty}" Width="80"/>
+                        <DataGridTextColumn Header="Pending" Binding="{Binding PendingQty}" Width="80"/>
+                        <DataGridTextColumn Header="Balance" Binding="{Binding BalanceQty}" Width="80"/>
+                        <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="100"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+            <!-- Middle Buttons -->
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical" VerticalAlignment="Center" Margin="10">
+                <Button x:Name="btnAddToBundle" Content="➜ Add" Width="90" Height="35" Style="{StaticResource ModernButton}" Background="#28A745" Click="btnAddToBundle_Click" />
+                <Button x:Name="btnRemoveFromBundle" Content="⬅ Remove" Width="90" Height="35" Style="{StaticResource ModernButton}" Background="#DC3545" Click="btnRemoveFromBundle_Click"/>
+            </StackPanel>
+
+            <!-- Table 2: Created Bundles -->
+            <GroupBox Header="Created Bundles / Boxes / Pallets" Grid.Row="0" Grid.Column="2" Margin="5">
+                <DataGrid x:Name="dgBundleList" SelectionChanged="dgBundleList_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Sr#" Binding="{Binding SrNo}" Width="40"/>
+                        <DataGridTextColumn Header="PackageID" Binding="{Binding PackageID}" Width="100"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding PackageType}" Width="80"/>
+                        <DataGridTextColumn Header="Total" Binding="{Binding TotalComponents}" Width="80"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                        <DataGridTextColumn Header="Created By" Binding="{Binding CreatedBy}" Width="120"/>
+                        <DataGridTextColumn Header="Created On" Binding="{Binding CreatedOn}" Width="150"/>
+                        <DataGridTextColumn Header="Remarks" Binding="{Binding Remarks}" Width="200"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+            <!-- Table 3: Components in Selected Bundle -->
+            <GroupBox Header="Components Inside Selected Package" Grid.Row="1" Grid.Column="2" Margin="5">
+                <DataGrid x:Name="dgBundleComponents">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Sr#" Binding="{Binding SrNo}" Width="40"/>
+                        <DataGridTextColumn Header="WID" Binding="{Binding WID}" Width="100"/>
+                        <DataGridTextColumn Header="Part Number" Binding="{Binding PartNumber}" Width="120"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
+                        <DataGridTextColumn Header="Qty in Package" Binding="{Binding QtyInPackage}" Width="100"/>
+                        <DataGridTextColumn Header="Remarks" Binding="{Binding Remarks}" Width="200"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+        </Grid>
+    </DockPanel>
+</Page>

@@ -31,6 +31,7 @@
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="FilterDataGrid" Version="1.2.9" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="QRCoder" Version="1.6.0" />
   </ItemGroup>
 
   <ItemGroup>
