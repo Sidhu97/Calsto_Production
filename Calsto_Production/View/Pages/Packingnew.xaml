@@ -2,8 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:Calsto_Production"
-      Title="Bundle Manager" Height="900" Width="1600"
-      Background="#F4F6F8">
+      Title="Bundle Manager" 
+      Background="#F4F6F8" >
 
     <Page.Resources>
         <!-- Modern Styles for Industrial Grade UI -->

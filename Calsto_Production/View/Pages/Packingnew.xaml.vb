@@ -166,6 +166,60 @@ Namespace Calsto_Production
                     .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
                 })
                 availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
+                    .SrNo = 10, .WID = "WID110", .CustomerName = "Cust20", .CustomerLocation = "Loc20",
+                    .ProjectNo = projectName, .Description = "Eye Bolt", .QtyAvailable = 6,
+                    .Color = "Gold", .ReadyToPackQty = 6, .PendingQty = 0, .BalanceQty = 0,
+                    .Location = "A1-10", .Status = "Available", .PartNumber = "PN110", .Remarks = "Ready to go"
+                })
+                availableComponents.Add(New Component With {
             .SrNo = 6, .WID = "WID106", .CustomerName = "Cust16", .CustomerLocation = "Loc16",
             .ProjectNo = projectName, .Description = "Washer", .QtyAvailable = 15,
             .Color = "Black", .ReadyToPackQty = 12, .PendingQty = 3, .BalanceQty = 0,

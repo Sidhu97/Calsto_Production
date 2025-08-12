@@ -58,6 +58,26 @@ Public Class dash_Plan_Dbhelper
 #End Region
 
 
+
+
+#Region "Date Apply"
+    Public Shared Sub UpdateProjectDispatchDate(bomNo As String, poDispatchDate As Date)
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("usp_UpdateProjectDates", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@BOMNo", bomNo)
+                cmd.Parameters.AddWithValue("@PODispatchDate", poDispatchDate)
+                con.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+#End Region
+
+
+
+
+
 End Class
 
 

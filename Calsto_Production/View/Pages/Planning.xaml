@@ -64,10 +64,10 @@
         </Style>
     </Page.Resources>
 
-    <Grid Margin="16">
+    <Grid Margin="0,5,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="3.2*"/>
         </Grid.ColumnDefinitions>
 
@@ -110,7 +110,7 @@
         </control:FilterDataGrid>
 
         <!-- Splitter -->
-        <GridSplitter Grid.Column="1" Width="10" Background="#ddd" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" Width="5" Background="#ddd" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
         <!-- Details and StockIn Panel -->
         <Grid Grid.Column="2" Margin="0">
@@ -120,25 +120,40 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+                      
+            <!-- Details DataGrid -->
+           
+            <Grid Grid.Row="1" Grid.Column="0" Margin="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" Margin="0,0,0,0" >
+                    <!-- Details DataGrid -->
+                    <TextBlock Text="Project No:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="10,0,8,8"/>
+                    <TextBlock x:Name ="txt_Projectno" Grid.Row="0"  FontWeight="SemiBold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
+                    <TextBlock Text="Customer Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="10,0,8,8"/>
+
+                    <TextBlock x:Name ="txt_Customer"  FontWeight="SemiBold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
+                    
+
+
+                </DockPanel>
+
+                <CheckBox x:Name="SelectAllFilteredCheckBox" Grid.Row="0" Grid.Column="1" Content="Select all Item" DockPanel.Dock="Right" Width="130" VerticalAlignment="Center" Checked="BtnSelectAll_Click" Unchecked="BtnClearSelection_Click" Margin="0,0,0,0"/>
                 <!-- Details DataGrid -->
-            <TextBlock Text="Project No:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="10,0,8,8"/>
-                <TextBlock x:Name ="txt_Projectno" Grid.Row="0"  FontWeight="SemiBold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
-            <TextBlock Text="Customer Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="10,0,8,8"/>
-                <TextBlock x:Name ="txt_Customer"  Grid.Row="0"  FontWeight="SemiBold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
-            </DockPanel>
-            
-            <!-- Details DataGrid -->
-            <DockPanel Grid.Row="0" HorizontalAlignment="Right" >
-
-                <CheckBox x:Name="SelectAllFilteredCheckBox" Content="Select all-Filtered" Width="130" VerticalAlignment="Center" />
-                <Button Content="Create Job Card" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  DockPanel.Dock="Right" Width="86" Margin="0,0,50,0" />
-
-            </DockPanel>
-
-            <!-- Details DataGrid -->
             <control:FilterDataGrid 
     x:Name="WIDBOMDG"
+    Grid.Column="0"
+    
     SelectionMode="Single"
     SelectionChanged="dgWId_Sel_Changed"
     AutoGenerateColumns="False" 
@@ -159,37 +174,91 @@
     Margin="0,0,0,12" Grid.Row="1">
 
                 <control:FilterDataGrid.Columns>
-                    <control:DataGridTextColumn Header="WID" Binding="{Binding WID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Assigned" Binding="{Binding Assigned}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="BOM Qty" Binding="{Binding BOMQty}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Process" Binding="{Binding Process}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Job card" Binding="{Binding Jobcard}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Colour" Binding="{Binding Colour}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Packing Balance" Binding="{Binding PackingBalance}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Dispatched Qty" Binding="{Binding DispatchQty}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Dispatched Qty" Binding="{Binding DispatchQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Dispatch Date" Binding="{Binding DispatchDate, StringFormat=\{0:dd-MM-yyyy\}}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Dispatch Pending" Binding="{Binding DispatchPending}" Width="110" IsColumnFiltered="True" />
+                    <control:DataGridTextColumn Header="Dispatch Pending" Binding="{Binding DispatchPending}" Width="90" IsColumnFiltered="True" />
+                        <control:DataGridTextColumn Header="Job" Binding="{Binding Jobcard}" Width="40" IsColumnFiltered="True" />
 
-
-                    <control:DataGridTemplateColumn Header="Create Job" Width="80">
-                        <control:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox 
-                Content="Job Card"               
+                        <control:DataGridTemplateColumn Header="Create Job" Width="80">
+                            <control:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox 
+                Content="Job Card"
                 VerticalAlignment="Center"
-                Padding="2,2"/>
-                            </DataTemplate>
-                        </control:DataGridTemplateColumn.CellTemplate>
-                    </control:DataGridTemplateColumn>
+                Padding="2,2"
+                IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <CheckBox.Style>
+                                            <Style TargetType="CheckBox">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                                
+                                                
+                                                
+                                                <Style.Triggers>
+                                                    <!-- Disable when Jobcard = Y -->
+                                                    <DataTrigger Binding="{Binding Jobcard}" Value="Y">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                       
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </control:DataGridTemplateColumn.CellTemplate>
+                        </control:DataGridTemplateColumn>
 
-                </control:FilterDataGrid.Columns>
+
+                    </control:FilterDataGrid.Columns>
             </control:FilterDataGrid>
+
+
+                <Border Background="White" Grid.Row="1" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Margin="0,0,0,12" Grid.Column="1">
+                    <StackPanel>
+                        <TextBlock Text="Job Cards" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
+
+                        
+                        
+                        <Grid>
+                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="50"/>
+                                
+                               
+                            </Grid.RowDefinitions>
+
+                            
+                            
+                            <Button Content="Create Jobs" Grid.Row="0" Width="80" Height="30" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  Margin="0,0,0,0" Click="CreateJobButton_Click" />
+                            <TextBlock Text="For Selected Items" Grid.Row="1"  FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center" Foreground="#222" Margin="0,0,0,0" />
+                            <TextBlock Text="Process Change" Grid.Row="2" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
+                            <ComboBox x:Name="Process_combo" Grid.Row="3" FontWeight="SemiBold" FontSize="13" Width="80" Foreground="#222" Margin="0,0,0,0" />
+                            <Button Content="Apply" Grid.Row="4"  Width="80" Height="30" Margin="0,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
+                            
+
+                        </Grid>
+
+
+                    </StackPanel>
+                </Border>
+
+
+            </Grid>
+
             <Grid x:Name="___Grid__3rd" Grid.Row="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto" MinWidth="150"/>
+                    <ColumnDefinition Width="auto" />
 
                 </Grid.ColumnDefinitions>
 
@@ -210,7 +279,7 @@
                     ColumnHeaderStyle="{StaticResource HeaderStyle}"
                     RowStyle="{StaticResource RowStyle}"
                     CanUserResizeColumns="True"
-                    CanUserSortColumns="True" Margin="0,0,10,0">
+                    CanUserSortColumns="True" Margin="0,0,0,0">
 
                     <control:FilterDataGrid.Columns>
                         <control:DataGridTextColumn Header="Seq." Binding="{Binding OP_Sequence}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
@@ -221,43 +290,7 @@
                         <control:DataGridTextColumn Header="Created by" Binding="{Binding Created_by}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     </control:FilterDataGrid.Columns>
                 </control:FilterDataGrid>
-
-
-
-
-                <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Margin="0,0,0,0" Grid.Column="1">
-                    <StackPanel>
-                        <TextBlock Text="Project Details" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-
-
-                            <TextBlock Text="PO Date:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <DatePicker Grid.Row="2" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8"/>
-
-                            <TextBlock Text="PO Date:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <DatePicker Grid.Row="3" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8"/>
-
-                            <Button Content="Apply" Grid.Row="4" Grid.Column="1" Width="80" Height="30" Margin="0,12,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
-                            <Button Content="Delete Jobs" Grid.Row="4" Grid.Column="0" Width="80" Height="30" Margin="0,12,0,0" Background="red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"/>
-
-                        </Grid>
-
-
-                    </StackPanel>
-                </Border>
+                <Button Content="Delete Jobs" Grid.Column="1"  Margin="0,0,0,0" Background="red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand" Click="DeleteJobButton_Click"/>
             </Grid>
 
         </Grid>

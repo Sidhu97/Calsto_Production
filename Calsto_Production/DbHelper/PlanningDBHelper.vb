@@ -95,4 +95,19 @@ Public Class PlanningDBHelper
             End Using
         End Using
     End Sub
+
+    Public Shared Sub DeleteJobCard(wid As String)
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("sp_DeleteJobCard_ByWID", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@WID", wid)
+                con.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+
+
+
 End Class

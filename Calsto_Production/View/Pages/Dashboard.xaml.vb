@@ -39,5 +39,29 @@ Public Class Dashboard
         End If
     End Sub
 
+    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+        Dim selectedProject As DashboardModel = TryCast(DashDG.SelectedItem, DashboardModel)
+        If selectedProject IsNot Nothing AndAlso dpDispatchDate.SelectedDate.HasValue Then
+            Try
+                dash_Plan_Dbhelper.UpdateProjectDispatchDate(selectedProject.BOM_No, dpDispatchDate.SelectedDate.Value)
+                MessageBox.Show("Dispatch date updated successfully.")
+
+                ' Refresh the project list
+                LoadProjects()
+
+                ' Keep the same project selected after refresh
+                Dim refreshedProject = ProjectList.FirstOrDefault(Function(p) p.BOM_No = selectedProject.BOM_No)
+                If refreshedProject IsNot Nothing Then
+                    DashDG.SelectedItem = refreshedProject
+                    DashDG.ScrollIntoView(refreshedProject)
+                End If
+
+            Catch ex As Exception
+                MessageBox.Show("Error updating date: " & ex.Message)
+            End Try
+        Else
+            MessageBox.Show("Please select a project and a date.")
+        End If
+    End Sub
 
 End Class

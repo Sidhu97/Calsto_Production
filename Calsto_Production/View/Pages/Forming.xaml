@@ -134,12 +134,7 @@
             </DockPanel>
 
             <!-- Details DataGrid -->
-            <DockPanel Grid.Row="0" HorizontalAlignment="Right" >
-
-                <CheckBox x:Name="SelectAllFilteredCheckBox" Content="Select all-Filtered" Width="130" VerticalAlignment="Center" />
-                <Button Content="Create Job Card" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  DockPanel.Dock="Right" Width="86" Margin="0,0,50,0" />
-
-            </DockPanel>
+           
 
             <!-- Details DataGrid -->
             <control:FilterDataGrid 
