@@ -69,7 +69,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Margin="16">
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="10"/>
@@ -134,13 +134,13 @@
             </DockPanel>
 
             <!-- Details DataGrid -->
-           
 
             <!-- Details DataGrid -->
             <control:FilterDataGrid 
     x:Name="FormDG"
     SelectionMode="Single"
     AutoGenerateColumns="False" 
+                SelectionChanged="dgFORM_Sel_Changed"
     CanUserAddRows="False"
     ShowRowsCount="True"
     ShowStatusBar="True"
@@ -155,10 +155,11 @@
     RowStyle="{StaticResource RowStyle}"
     CanUserResizeColumns="True"
     CanUserSortColumns="True"
-    Margin="0,0,0,12" Grid.Row="1">
+                Grid.Row="1"
+    Margin="0,0,0,0" >
 
                 <control:FilterDataGrid.Columns>
-                    <control:DataGridTextColumn Header="Job Card" Binding="{Binding JC_no}" Width="0" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+
                     <control:DataGridTextColumn Header="BOM Name" Binding="{Binding BOMName}" Width="130" IsColumnFiltered="True">
                         <control:DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock" BasedOn="{StaticResource CellTextStyle}">
@@ -167,30 +168,39 @@
                             </Style>
                         </control:DataGridTextColumn.ElementStyle>
                     </control:DataGridTextColumn>
+                    
                     <control:DataGridTextColumn Header="Part Number" Binding="{Binding PartNumber}" Width="140" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="280" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Thick" Binding="{Binding Thick}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Unit Weight" Binding="{Binding UnitWeight}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Total Weight" Binding="{Binding TotalWeight}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Total Weight" Binding="{Binding TotalWeight}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Colour" Binding="{Binding Colour}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Qnty" Binding="{Binding BOMQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Produced Qty" Binding="{Binding ProducedQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Balance Qty" Binding="{Binding BalanceQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Qnty" Binding="{Binding BOMQty}" Foreground="Black"  FontWeight="Bold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Completed" Binding="{Binding ProducedQty}" Foreground="Green"  FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Pending" Binding="{Binding BalanceQty}" Foreground="Red" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Status" Binding="{Binding Status}" Foreground="black" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                 </control:FilterDataGrid.Columns>
             </control:FilterDataGrid>
+
+
+
+
+
             <Grid x:Name="___Grid__3rd" Grid.Row="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto" MinWidth="150"/>
+                    <ColumnDefinition Width="Auto" MinWidth="900"/>
+                    <ColumnDefinition Width="Auto"/>
+
 
                 </Grid.ColumnDefinitions>
 
                 <control:FilterDataGrid 
                     x:Name="JobcardDG"
-                   
+                   Grid.Column="1"
                     AutoGenerateColumns="False"    
                     ShowRowsCount="True"
                     CanUserAddRows="False"
@@ -208,21 +218,45 @@
                     CanUserSortColumns="True" Margin="0,0,10,0">
 
                     <control:FilterDataGrid.Columns>
-                        <control:DataGridTextColumn Header="Seq." Binding="{Binding OP_Sequence}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Job Card" Binding="{Binding JC_no}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="WID" Binding="{Binding WID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Operation" Binding="{Binding Operation_ID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Created On" Binding="{Binding Created_date}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Created by" Binding="{Binding Created_by}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        
+                        
+                        <control:DataGridTextColumn Header="Lot ID" Binding="{Binding Lot_id}" Width="180" IsColumnFiltered="True" Foreground="Black"  FontWeight="Bold" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Qnty" Binding="{Binding Quantity}" Width="60" IsColumnFiltered="True" Foreground="Black"  FontWeight="Bold" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Date" Binding="{Binding Entry_date}" Width="130" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="User" Binding="{Binding Done_by}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Moved to" Binding="{Binding Moved_to}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     </control:FilterDataGrid.Columns>
                 </control:FilterDataGrid>
 
-
-
-
-                <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Margin="0,0,0,0" Grid.Column="1">
+                <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Grid.Column="2">
                     <StackPanel>
-                        <TextBlock Text="Project Details" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
+                        <TextBlock Text="Lot Details" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="Print" Grid.Row="0" Width="80" Height="30" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  Margin="0,0,0,0"  />
+
+                            <TextBlock Text="Lot Qty" Grid.Row="2" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
+                            <TextBox x:Name="Process_combo" Grid.Row="3" FontWeight="SemiBold" FontSize="13" Width="80" Foreground="#222" Margin="0,0,0,0" />
+                            <Button Content="Change" Grid.Row="4"  Width="80" Height="30" Margin="0,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
+                            <Button Content="Cancel" Grid.Row="5"  Width="80" Height="30" Margin="0,0,0,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
+
+                        </Grid>
+
+
+                    </StackPanel>
+                </Border>
+
+
+                <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Margin="0,0,5,0" Grid.Column="0">
+                    <StackPanel>
+                        <TextBlock Text="Item Details" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -231,22 +265,31 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
 
 
-                            <TextBlock Text="PO Date:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <DatePicker Grid.Row="2" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8"/>
+                            <TextBlock Text="Item Description :" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_Description" Text="Description" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="0,0,8,8"/>
+                            <TextBlock Text="Required Qty :" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_ReqQty" Text="Quantity" FontSize="20" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Green" Margin="0,0,8,8"/>
+                            <TextBlock Text="Balance Qty :" Grid.Row="3"  Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_BalQty" Text="Bal qty" FontSize="15" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Foreground="Red" FontWeight="Bold" Margin="0,0,8,8"/>
+                            <TextBlock Text="Colour :" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_Colour" Text="RAL " Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,8,8"/>
 
-                            <TextBlock Text="PO Date:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <DatePicker Grid.Row="3" Grid.Column="1" Width="150" FontSize="12" Margin="0,0,0,8"/>
 
-                            <Button Content="Apply" Grid.Row="4" Grid.Column="1" Width="80" Height="30" Margin="0,12,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
-                            <Button Content="Delete Jobs" Grid.Row="4" Grid.Column="0" Width="80" Height="30" Margin="0,12,0,0" Background="red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"/>
+
+                            <TextBlock Text="Lot Entry" Grid.Row="6" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
+                            <TextBox x:Name="Lot_qty" Grid.Row="7"  Grid.Column="0" FontWeight="SemiBold" FontSize="13" Width="80" Foreground="#222" Margin="0,0,0,0" HorizontalAlignment="Left" />
+                            <Button Content="Enter" Grid.Row="7"    Grid.Column="1" Width="80" Height="30" Margin="0,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand" Click="LotEntry_Click"  />
 
                         </Grid>
 

@@ -58,8 +58,7 @@ Public Class FormingDBHelper
                         .BOMQty = If(IsDBNull(reader("BOM Qty")), 0, Convert.ToInt32(reader("BOM Qty"))),
                         .ProducedQty = If(IsDBNull(reader("Produced Qty")), 0, Convert.ToInt32(reader("Produced Qty"))),
                         .BalanceQty = If(IsDBNull(reader("Balance Qty")), 0, Convert.ToInt32(reader("Balance Qty"))),
-                        .DispatchDate = If(IsDBNull(reader("Dispatch Date")), CType(Nothing, Date?), Convert.ToDateTime(reader("Dispatch Date"))),
-                        .DueDate = If(IsDBNull(reader("Due Date")), 0, Convert.ToInt32(reader("Due Date")))
+                        .Status = reader("Status").ToString()
                     }
                     formingJobs.Add(job)
                 End While
@@ -72,5 +71,56 @@ Public Class FormingDBHelper
     End Function
 
 #End Region
+
+
+#Region "Get Forming LOT IDs"
+    Public Shared Function GetFormingLots(Jobno As String) As List(Of FormingLotModel)
+        Dim forminglots As New List(Of FormingLotModel)
+
+        Using con As New SqlConnection(conString)
+            ' Add WHERE clause to use the parameter
+            Dim query As String = "SELECT * FROM V_JOB_Entry WHERE [JC_no] = @JC_no"
+            Dim cmd As New SqlCommand(query, con)
+            cmd.Parameters.AddWithValue("@JC_no", Jobno)
+
+            Try
+                con.Open()
+                Dim reader As SqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim job As New FormingLotModel With {
+                        .JC_no = reader("JC_no").ToString(),
+                            .Lot_id = reader("Lot_id").ToString(),
+                            .Operation_id = reader("Operation_ID").ToString(),
+                            .Quantity = If(IsDBNull(reader("Quantity")), 0, Convert.ToInt32(reader("Quantity"))),
+                            .Entry_date = If(IsDBNull(reader("Entry_Date")), Nothing, Convert.ToDateTime(reader("Entry_Date"))),
+                            .Done_by = If(IsDBNull(reader("Done_by")), String.Empty, reader("Done_by").ToString()),
+                            .Moved_to = If(IsDBNull(reader("Moved_to")), String.Empty, reader("Moved_to").ToString())
+                    }
+                    forminglots.Add(job)
+                End While
+            Catch ex As Exception
+                MessageBox.Show("Error loading Lot IDs: " & ex.Message)
+            End Try
+        End Using
+
+        Return forminglots
+    End Function
+
+#End Region
+
+
+    Public Shared Sub CreateJobEntry(JC As String, Qty As Int32, createdBy As String, remark As String)
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("sp_CreateLotEntry", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@JC_no", JC)
+                cmd.Parameters.AddWithValue("@Quantity", Qty)
+                cmd.Parameters.AddWithValue("@Entered_By", createdBy)
+                cmd.Parameters.AddWithValue("@Remarks", remark)
+                con.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
 
 End Class

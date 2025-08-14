@@ -16,6 +16,22 @@
     Public Property BOMQty As Integer
     Public Property ProducedQty As Integer
     Public Property BalanceQty As Integer
-    Public Property DispatchDate As Date?
-    Public Property DueDate As Integer
+    Public Property Status As String
+
+End Class
+
+
+
+Public Class FormingLotModel
+
+
+    Public Property JC_no As String
+    Public Property Lot_id As String
+    Public Property Operation_id As String
+    Public Property Quantity As Int32
+    Public Property Entry_date As Date?
+    Public Property Done_by As String
+    Public Property Moved_to As String
+
+
 End Class
