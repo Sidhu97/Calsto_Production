@@ -174,7 +174,8 @@
     Margin="0,0,0,12" Grid.Row="1">
 
                 <control:FilterDataGrid.Columns>
-                    <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Description" Binding="{Binding WID}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Assigned" Binding="{Binding Assigned}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="BOM Qty" Binding="{Binding BOMQty}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Process" Binding="{Binding Process}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />

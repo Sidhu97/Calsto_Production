@@ -24,7 +24,7 @@ End Class
 
 Public Class FormingLotModel
 
-
+    Public Property Transaction_ID As String
     Public Property JC_no As String
     Public Property Lot_id As String
     Public Property Operation_id As String

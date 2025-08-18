@@ -32,15 +32,32 @@
             <Setter Property="MinHeight" Value="22"/>
             <Setter Property="Padding" Value="6,2"/>
             <Style.Triggers>
+                <!-- Selected Row -->
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="LightBlue"/>
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
+                <!-- Hover -->
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="LightBlue"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" 
+            Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="LightBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
 
         <!-- Cell text style with trimming -->
         <Style x:Key="CellTextStyle" TargetType="{x:Type TextBlock}">
@@ -51,18 +68,18 @@
         </Style>
 
         <!-- Highlight blue for ProjectStatus Open -->
-        <Style x:Key="ProjectStatusStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
+        <Style x:Key="Jobstatusstyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="OPEN">
+                <DataTrigger Binding="{Binding Status}" Value="OPEN">
+                    <Setter Property="Foreground" Value="DARKGreen"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="PARTIAL">
                     <Setter Property="Foreground" Value="Green"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="HOLD">
-                    <Setter Property="Foreground" Value="RED"/>
-                    <Setter Property="FontWeight" Value="SemiBold"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="CLOSED">
-                    <Setter Property="Foreground" Value="PURPLE"/>
+                <DataTrigger Binding="{Binding Status}" Value="CLOSED">
+                    <Setter Property="Foreground" Value="Gray"/>
                     <Setter Property="FontWeight" Value="SemiBold"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -182,7 +199,7 @@
                     <control:DataGridTextColumn Header="Qnty" Binding="{Binding BOMQty}" Foreground="Black"  FontWeight="Bold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Completed" Binding="{Binding ProducedQty}" Foreground="Green"  FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Pending" Binding="{Binding BalanceQty}" Foreground="Red" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Status" Binding="{Binding Status}" Foreground="black" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Status" Binding="{Binding Status}" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource Jobstatusstyle}" />
                 </control:FilterDataGrid.Columns>
             </control:FilterDataGrid>
 
@@ -203,6 +220,7 @@
                 <control:FilterDataGrid 
                     x:Name="JobcardDG"
                    Grid.Column="1"
+                    SelectionChanged="dgLOT_Sel_Changed"
                     AutoGenerateColumns="False"    
                     ShowRowsCount="True"
                     CanUserAddRows="False"
@@ -238,17 +256,17 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="10"/>
                                 <RowDefinition Height="25"/>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Button Content="Print" Grid.Row="0" Width="80" Height="30" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  Margin="0,0,0,0"  />
+                            <Button x:Name="print_btn" Content="Print" Grid.Row="0" Width="80" Height="30" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  Margin="0,5,0,5" HorizontalAlignment="Left" IsEnabled="False"  />
 
-                            <TextBlock Text="Lot Qty" Grid.Row="2" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
-                            <TextBox x:Name="Process_combo" Grid.Row="3" FontWeight="SemiBold" FontSize="13" Width="80" Foreground="#222" Margin="0,0,0,0" />
-                            <Button Content="Change" Grid.Row="4"  Width="80" Height="30" Margin="0,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
-                            <Button Content="Cancel" Grid.Row="5"  Width="80" Height="30" Margin="0,0,0,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
-
+                            <TextBlock x:Name="Lotapply1" Text="Lot Qty" Grid.Row="2" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
+                            <TextBox x:Name="Lotedit" Grid.Row="3" FontWeight="SemiBold" FontSize="13" Height="30" Width="80" Foreground="#222" Margin="0,5,0,5" Visibility="Collapsed" />
+                            <Button x:Name="Lotapply" Content="Change" Grid.Row="4"  Width="80" Height="30" Margin="0,5,0,5" Click ="Change_lot_click" Background="green" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand" Visibility="Collapsed"  />
+                            <Button x:Name="editcancel" Content="Cancel" Grid.Row="5"  Width="80" Height="30" Margin="0,5,0,5" Click="Cancel_Click" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand" IsEnabled="False"  />
+                            <Button x:Name="editbtn" Content="Edit" Grid.Row="5"  Width="80" Height="30" Margin="0,5,0,5" Click ="Editbtn_Click" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand" IsEnabled="False"  />
                         </Grid>
 
 

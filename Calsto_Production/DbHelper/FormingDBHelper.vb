@@ -88,6 +88,7 @@ Public Class FormingDBHelper
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
                 While reader.Read()
                     Dim job As New FormingLotModel With {
+                        .Transaction_ID = Convert.ToInt32(reader("Transaction_ID")),
                         .JC_no = reader("JC_no").ToString(),
                             .Lot_id = reader("Lot_id").ToString(),
                             .Operation_id = reader("Operation_ID").ToString(),
@@ -122,5 +123,38 @@ Public Class FormingDBHelper
             End Using
         End Using
     End Sub
+
+
+
+
+#Region "Edit Forming LOT"
+    Public Shared Function EditLotEntry(TransId As String, lotId As String, newQty As Integer, updatedBy As String, remarks As String) As Boolean
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("sp_UpdateJobCardEntry", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@Transaction_ID", TransId)
+                cmd.Parameters.AddWithValue("@JC_no", lotId)
+                cmd.Parameters.AddWithValue("@Quantity", newQty)
+                cmd.Parameters.AddWithValue("@Remarks", remarks)
+                cmd.Parameters.AddWithValue("@UpdatedBy", updatedBy)
+
+                Try
+                    con.Open()
+                    cmd.ExecuteNonQuery()
+                    Return True
+                Catch ex As Exception
+                    MessageBox.Show("Error updating Lot Entry: " & ex.Message)
+                    Return False
+                End Try
+            End Using
+        End Using
+    End Function
+#End Region
+
+
+
+
+
+
 
 End Class
