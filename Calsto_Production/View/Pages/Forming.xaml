@@ -158,6 +158,8 @@
                 Grid.Row="1"
     Margin="0,0,0,0" >
 
+                
+                
                 <control:FilterDataGrid.Columns>
 
                     <control:DataGridTextColumn Header="BOM Name" Binding="{Binding BOMName}" Width="130" IsColumnFiltered="True">
@@ -192,7 +194,7 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto" MinWidth="900"/>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto"/>
 
 
@@ -254,7 +256,7 @@
                 </Border>
 
 
-                <Border Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Margin="0,0,5,0" Grid.Column="0">
+                <Border x:Name="DetailsTab" Background="White" CornerRadius="6" Padding="16" BorderBrush="#D1D9E6" BorderThickness="1" Margin="0,0,5,0" Grid.Column="0">
                     <StackPanel>
                         <TextBlock Text="Item Details" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,12" />
 
@@ -271,19 +273,22 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
 
 
                             <TextBlock Text="Item Description :" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <TextBlock x:Name="Txt_Description" Text="Description" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_Description" Text="" FontSize="12" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="0,0,8,8"/>
                             <TextBlock Text="Required Qty :" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <TextBlock x:Name="Txt_ReqQty" Text="Quantity" FontSize="20" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Green" Margin="0,0,8,8"/>
-                            <TextBlock Text="Balance Qty :" Grid.Row="3"  Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <TextBlock x:Name="Txt_BalQty" Text="Bal qty" FontSize="15" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Foreground="Red" FontWeight="Bold" Margin="0,0,8,8"/>
-                            <TextBlock Text="Colour :" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                            <TextBlock x:Name="Txt_Colour" Text="RAL " Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_ReqQty" Text="" FontSize="12" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="0,0,8,8"/>
+                            <TextBlock Text="Completed Qty :" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_CompQty" Text="" FontSize="20" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Foreground="Green" Margin="0,0,8,8"/>
+                            <TextBlock Text="Balance Qty :" Grid.Row="4"  Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_BalQty" Text="" FontSize="15" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Foreground="Red" FontWeight="Bold" Margin="0,0,8,8"/>
+                            <TextBlock Text="Colour :" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
+                            <TextBlock x:Name="Txt_Colour" Text="" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,8,8"/>
 
 
 
