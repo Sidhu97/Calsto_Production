@@ -46,20 +46,20 @@
         </Style>
 
         <!-- Highlight blue for ProjectStatus Open -->
-        <Style x:Key="ProjectStatusStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
+        <Style x:Key="PPCStatusStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
+
+            <Setter Property="Foreground" Value="DarkRed"/>
+            <Setter Property="FontWeight" Value="Bold"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="OPEN">
+                <DataTrigger Binding="{Binding Status}" Value="BOM Not Available">
+                    <Setter Property="Foreground" Value="LightGray"/>
+                    
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="PPC Released">
                     <Setter Property="Foreground" Value="Green"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="HOLD">
-                    <Setter Property="Foreground" Value="RED"/>
-                    <Setter Property="FontWeight" Value="SemiBold"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding ProjectStatus}" Value="CLOSED">
-                    <Setter Property="Foreground" Value="PURPLE"/>
-                    <Setter Property="FontWeight" Value="SemiBold"/>
-                </DataTrigger>
+                
             </Style.Triggers>
         </Style>
     </Page.Resources>
@@ -95,7 +95,7 @@
             CanUserSortColumns="True"
             Grid.Column="0">
             <control:FilterDataGrid.Columns>
-                <control:DataGridTextColumn Header="BOM No." Binding="{Binding PROJECTNO}" Width="110" IsColumnFiltered="True">
+                <control:DataGridTextColumn Header="BOM No." Binding="{Binding PROJECTNO}" Width="80" IsColumnFiltered="True">
                     <control:DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
                             <Setter Property="FontWeight" Value="Bold"/>
@@ -104,8 +104,8 @@
                     </control:DataGridTextColumn.ElementStyle>
                 </control:DataGridTextColumn>
 
-                <control:DataGridTextColumn Header="Customer" Binding="{Binding Customer}" Width="250" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-
+                <control:DataGridTextColumn Header="Customer" Binding="{Binding Customer}" Width="200" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="PPC Status" Binding="{Binding Status}"  Width="130" IsColumnFiltered="True" ElementStyle="{StaticResource PPCStatusStyle}" />
             </control:FilterDataGrid.Columns>
         </control:FilterDataGrid>
 
@@ -153,7 +153,6 @@
             <control:FilterDataGrid 
     x:Name="WIDBOMDG"
     Grid.Column="0"
-    
     SelectionMode="Single"
     SelectionChanged="dgWId_Sel_Changed"
     AutoGenerateColumns="False" 
@@ -174,7 +173,7 @@
     Margin="0,0,0,12" Grid.Row="1">
 
                 <control:FilterDataGrid.Columns>
-                        <control:DataGridTextColumn Header="Description" Binding="{Binding WID}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        
                         <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Assigned" Binding="{Binding Assigned}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="BOM Qty" Binding="{Binding BOMQty}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />

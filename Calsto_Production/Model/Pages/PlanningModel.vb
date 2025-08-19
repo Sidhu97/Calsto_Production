@@ -4,7 +4,7 @@ Public Class PlanningModel
     ' This may contain header-level info like PROJECTNO etc.
     Public Property PROJECTNO As String
     Public Property Customer As String
-
+    Public Property Status As String
 
 End Class
 

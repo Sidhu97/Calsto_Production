@@ -12,12 +12,13 @@ Public Class PlanningDBHelper
         Dim Projectlist As New List(Of PlanningModel)
         Using con As New SqlConnection(conString)
             con.Open()
-            Using cmd As New SqlCommand("SELECT * FROM PRO_list", con)
+            Using cmd As New SqlCommand("SELECT * FROM V_PROJ_PLANNING", con)
                 Using rdr = cmd.ExecuteReader()
                     While rdr.Read()
                         Projectlist.Add(New PlanningModel With {
                             .PROJECTNO = rdr("PRO_No").ToString(),
-                            .Customer = rdr("Customer").ToString()
+                            .Customer = rdr("Customer").ToString(),
+                            .Status = rdr("Status").ToString()
                         })
                     End While
                 End Using

@@ -5,7 +5,7 @@ Public Class Forming
 
     Private FormingJobList As ObservableCollection(Of FormingModel)
     Private LotList As ObservableCollection(Of FormingLotModel)
-    Private ProjectList As ObservableCollection(Of PlanningModel)
+    Private ProjectList As ObservableCollection(Of FormngProjModel)
 
     Public Sub New()
         InitializeComponent()
@@ -15,8 +15,8 @@ Public Class Forming
 
     Private Sub LoadProjects()
         Try
-            Dim data = PlanningDBHelper.GetProjectNO()
-            ProjectList = New ObservableCollection(Of PlanningModel)(data)
+            Dim data = FormingDBHelper.GetProjectNO()
+            ProjectList = New ObservableCollection(Of FormngProjModel)(data)
             ProjDG.ItemsSource = ProjectList
         Catch ex As Exception
             MessageBox.Show("Error loading project list: " & ex.Message)
@@ -49,7 +49,7 @@ Public Class Forming
 
 
     Private Sub FormProj_Sel_Changed(sender As Object, e As SelectionChangedEventArgs)
-        Dim selectedProj As PlanningModel = TryCast(ProjDG.SelectedItem, PlanningModel)
+        Dim selectedProj As FormngProjModel = TryCast(ProjDG.SelectedItem, FormngProjModel)
         If selectedProj IsNot Nothing Then
             LoadformingJobs(selectedProj.PROJECTNO)
             txt_Projectno.Text = selectedProj.PROJECTNO
@@ -273,7 +273,7 @@ Public Class Forming
         Dim jcNoToSelect As String = selectedJC.JC_no
 
         ' Refresh data (new values loaded from DB)
-        Dim selectedProj As PlanningModel = TryCast(ProjDG.SelectedItem, PlanningModel)
+        Dim selectedProj As FormngProjModel = TryCast(ProjDG.SelectedItem, FormngProjModel)
         If selectedProj IsNot Nothing Then
             LoadformingJobs(selectedProj.PROJECTNO)
         End If

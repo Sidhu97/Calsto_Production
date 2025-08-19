@@ -144,10 +144,11 @@ Public Class Planning
 
         progressWindow.Close()
         SelectAllFilteredCheckBox.IsChecked = False
-        Dim currentProj = TryCast(ProjNoDG.SelectedItem, PlanningModel)
-        If currentProj IsNot Nothing Then
-            LoadBOMitems(currentProj.PROJECTNO)
-        End If
+        RefreshBOM()
+        Refreshproj()
+
+
+
     End Sub
 
 
@@ -172,15 +173,90 @@ Public Class Planning
         PlanningDBHelper.DeleteJobCard(selectedRow.WID)
 
         ' Clear selection
-        WIDBOMDG.SelectedItem = Nothing
+        'WIDBOMDG.SelectedItem = Nothing
+        JobcardDG.ItemsSource = Nothing
 
         MessageBox.Show($"Job card for WID {selectedRow.WID} deleted successfully.")
 
-        Dim currentProj = TryCast(ProjNoDG.SelectedItem, PlanningModel)
-        If currentProj IsNot Nothing Then
-            LoadBOMitems(currentProj.PROJECTNO)
-        End If
+        RefreshBOM()
+        Refreshproj()
 
+    End Sub
+
+
+
+    Private Sub Refreshproj()
+        Try
+            ' ==== Refresh Projects ====
+            ProjNoDG.SavePreset()
+
+            Dim selectedProjNo As String = Nothing
+            If ProjNoDG.SelectedItem IsNot Nothing Then
+                selectedProjNo = CType(ProjNoDG.SelectedItem, PlanningModel).PROJECTNO
+            End If
+
+            Dim projData = PlanningDBHelper.GetProjectNO()
+            ProjectList = New ObservableCollection(Of PlanningModel)(projData)
+            ProjNoDG.ItemsSource = ProjectList
+
+            ProjNoDG.LoadPreset()
+
+            ' Restore project selection
+            Dim currentProjNo As String = Nothing
+            If selectedProjNo IsNot Nothing Then
+                Dim projRow = ProjectList.FirstOrDefault(Function(x) x.PROJECTNO = selectedProjNo)
+                If projRow IsNot Nothing Then
+                    ProjNoDG.SelectedItem = projRow
+                    ProjNoDG.UpdateLayout()
+                    ProjNoDG.ScrollIntoView(projRow)
+                    currentProjNo = projRow.PROJECTNO
+
+                End If
+
+
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error refreshing: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub RefreshBOM()
+        Try
+
+            WIDBOMDG.SavePreset()
+            ' 1. Save selected item key (if any)
+            Dim selectedWID As String = Nothing
+            If WIDBOMDG.SelectedItem IsNot Nothing Then
+                selectedWID = CType(WIDBOMDG.SelectedItem, PlanningSideDgModel).WID
+            End If
+
+            ' 2. Get current project no. from Project grid selection
+            Dim selectedProj = CType(ProjNoDG.SelectedItem, PlanningModel)
+            If selectedProj Is Nothing Then Exit Sub
+
+            Dim proNo = selectedProj.PROJECTNO
+
+
+
+            ' 3. Reload BOM items
+            Dim data = PlanningDBHelper.GetBOMItems(proNo)
+            BOMList = New ObservableCollection(Of PlanningSideDgModel)(data)
+            WIDBOMDG.ItemsSource = BOMList
+            WIDBOMDG.LoadPreset()
+            ' 4. Restore selection
+            If selectedWID IsNot Nothing Then
+                Dim rowToSelect = BOMList.FirstOrDefault(Function(x) x.WID = selectedWID)
+                If rowToSelect IsNot Nothing Then
+                    WIDBOMDG.SelectedItem = rowToSelect
+                    WIDBOMDG.UpdateLayout()
+                    WIDBOMDG.ScrollIntoView(rowToSelect)
+                End If
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error refreshing BOM items: " & ex.Message)
+        End Try
     End Sub
 
 

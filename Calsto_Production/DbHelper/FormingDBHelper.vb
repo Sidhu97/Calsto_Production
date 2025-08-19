@@ -8,16 +8,17 @@ Public Class FormingDBHelper
 
 
 #Region "Project List"
-    Public Shared Function GetProjectNO() As List(Of PlanningModel)
-        Dim Projectlist As New List(Of PlanningModel)
+    Public Shared Function GetProjectNO() As List(Of FormngProjModel)
+        Dim Projectlist As New List(Of FormngProjModel)
         Using con As New SqlConnection(conString)
             con.Open()
-            Using cmd As New SqlCommand("SELECT * FROM PRO_list", con)
+            Using cmd As New SqlCommand("SELECT * FROM V_PROJ_FORMING", con)
                 Using rdr = cmd.ExecuteReader()
                     While rdr.Read()
-                        Projectlist.Add(New PlanningModel With {
+                        Projectlist.Add(New FormngProjModel With {
                             .PROJECTNO = rdr("PRO_No").ToString(),
-                            .Customer = rdr("Customer").ToString()
+                            .Customer = rdr("Customer").ToString(),
+                            .Status = rdr("Status").ToString()
                         })
                     End While
                 End Using

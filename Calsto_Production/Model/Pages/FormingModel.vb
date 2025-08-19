@@ -1,4 +1,17 @@
-﻿Public Class FormingModel
+﻿
+Public Class FormngProjModel
+    ' This may contain header-level info like PROJECTNO etc.
+    Public Property PROJECTNO As String
+    Public Property Customer As String
+    Public Property Status As String
+
+End Class
+
+
+
+
+
+Public Class FormingModel
 
     Public Property WID As String
     Public Property BOMNo As String
