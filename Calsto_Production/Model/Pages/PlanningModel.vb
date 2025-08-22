@@ -62,6 +62,11 @@ Public Class JobCardModel
     Public Property Operation_ID As String
     Public Property Created_date As Nullable(Of Date)
     Public Property Created_by As String
+
+    Public Property Job_Qty As Integer
+    Public Property Ready_qty As Integer
+
+
 End Class
 
 Public Class WIDBOMCHECKBOX

@@ -112,7 +112,6 @@ Public Class Forming
         Lotapply.Visibility = Visibility.Collapsed
         editbtn.Visibility = Visibility.Visible
 
-
     End Sub
 
 
@@ -160,38 +159,10 @@ Public Class Forming
         editbtn.Visibility = Visibility.Visible
         Lotedit.Text = ""
 
-        Dim jcNoToSelect As String = selectedJC.JC_no
+        RefreshBOM()
+        Refreshproj()
 
-        ' Refresh data (new values loaded from DB)
-        Dim selectedProj As PlanningModel = TryCast(ProjDG.SelectedItem, PlanningModel)
-        If selectedProj IsNot Nothing Then
-            LoadformingJobs(selectedProj.PROJECTNO)
-        End If
-
-        ' 🔹 Find the refreshed row and reselect
-        Dim refreshedList = CType(FormDG.ItemsSource, IEnumerable(Of FormingModel))
-        Dim refreshedItem = refreshedList.FirstOrDefault(Function(x) x.JC_no = jcNoToSelect)
-
-        If refreshedItem IsNot Nothing Then
-            FormDG.SelectedItem = refreshedItem
-            FormDG.ScrollIntoView(refreshedItem)
-
-            ' Update details with **refreshed values**
-            Txt_ReqQty.Text = refreshedItem.BOMQty.ToString()
-            Txt_BalQty.Text = refreshedItem.BalanceQty.ToString()
-            Txt_Colour.Text = refreshedItem.Colour
-            Txt_Description.Text = refreshedItem.Description
-            Txt_CompQty.Text = refreshedItem.ProducedQty.ToString()
-
-            If refreshedItem.Status = "CLOSED" Then
-                DetailsTab.IsEnabled = False
-            Else
-                DetailsTab.IsEnabled = True
-            End If
-
-
-        End If
-
+        Lot_qty.Text = ""
 
     End Sub
 
@@ -268,47 +239,104 @@ Public Class Forming
 
         ' Save to DB
         FormingDBHelper.CreateJobEntry(selectedJC.JC_no, JCQty, createdBy, Remarks)
+        RefreshBOM()
+        Refreshproj()
+        Lot_qty.Text = ""
 
-        ' 🔹 Remember JC_no before reload
-        Dim jcNoToSelect As String = selectedJC.JC_no
+        MessageBox.Show($"Lot entry applied for Job Card {selectedJC} successfully.", "Lot Entry", MessageBoxButton.OK, MessageBoxImage.Information)
+    End Sub
 
-        ' Refresh data (new values loaded from DB)
-        Dim selectedProj As FormngProjModel = TryCast(ProjDG.SelectedItem, FormngProjModel)
-        If selectedProj IsNot Nothing Then
-            LoadformingJobs(selectedProj.PROJECTNO)
-        End If
 
-        ' 🔹 Find the refreshed row and reselect
-        Dim refreshedList = CType(FormDG.ItemsSource, IEnumerable(Of FormingModel))
-        Dim refreshedItem = refreshedList.FirstOrDefault(Function(x) x.JC_no = jcNoToSelect)
 
-        If refreshedItem IsNot Nothing Then
-            FormDG.SelectedItem = refreshedItem
-            FormDG.ScrollIntoView(refreshedItem)
+    Private Sub RefreshBOM()
+        Try
+            ' 1. Save current grid preset
+            FormDG.SavePreset()
 
-            ' Update details with **refreshed values**
-            Txt_ReqQty.Text = refreshedItem.BOMQty.ToString()
-            Txt_BalQty.Text = refreshedItem.BalanceQty.ToString()
-            Txt_Colour.Text = refreshedItem.Colour
-            Txt_Description.Text = refreshedItem.Description
-            Txt_CompQty.Text = refreshedItem.ProducedQty.ToString()
-
-            If refreshedItem.Status = "CLOSED" Then
-                DetailsTab.IsEnabled = False
-            Else
-                DetailsTab.IsEnabled = True
+            ' 2. Remember currently selected WID
+            Dim selectedWID As String = Nothing
+            If FormDG.SelectedItem IsNot Nothing Then
+                selectedWID = CType(FormDG.SelectedItem, FormingModel).WID
             End If
 
+            ' 3. Get current project number
+            Dim selectedProj = CType(ProjDG.SelectedItem, FormngProjModel)
+            If selectedProj Is Nothing Then Exit Sub
+            Dim proNo = selectedProj.PROJECTNO
 
-        End If
+            ' 4. Reload BOM items from database
+            Dim data = FormingDBHelper.GetFormingJobs(proNo)
+            FormingJobList = New ObservableCollection(Of FormingModel)(data)
+            FormDG.ItemsSource = FormingJobList
 
-        Lot_qty.Text = ""
-        MessageBox.Show($"Lot entry applied for Job Card {jcNoToSelect} successfully.", "Lot Entry", MessageBoxButton.OK, MessageBoxImage.Information)
+            ' 5. Restore grid preset
+            FormDG.LoadPreset()
+
+            ' 6. Determine which item to select
+            Dim rowToSelect = FormingJobList.FirstOrDefault(Function(x) x.WID = selectedWID)
+
+            If rowToSelect IsNot Nothing Then
+                ' 7. Select row and scroll into view
+                FormDG.SelectedItem = rowToSelect
+                FormDG.UpdateLayout()
+                FormDG.ScrollIntoView(rowToSelect)
+
+                ' 8. Update detail fields safely
+                Txt_ReqQty.Text = If(rowToSelect.BOMQty.ToString(), "0")
+                Txt_BalQty.Text = If(rowToSelect.BalanceQty.ToString(), "0")
+                Txt_Colour.Text = If(rowToSelect.Colour, String.Empty)
+                Txt_Description.Text = If(rowToSelect.Description, String.Empty)
+                Txt_CompQty.Text = If(rowToSelect.ProducedQty.ToString(), "0")
+
+                ' 9. Enable or disable Details tab based on status
+                DetailsTab.IsEnabled = Not String.Equals(rowToSelect.Status, "CLOSED", StringComparison.OrdinalIgnoreCase)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error refreshing BOM: " & ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+        End Try
     End Sub
 
 
 
 
+
+
+    Private Sub Refreshproj()
+        Try
+            ' ==== Refresh Projects ====
+            ProjDG.SavePreset()
+
+            Dim selectedProjNo As String = Nothing
+            If ProjDG.SelectedItem IsNot Nothing Then
+                selectedProjNo = CType(ProjDG.SelectedItem, FormngProjModel).PROJECTNO
+            End If
+
+            Dim projData = FormingDBHelper.GetProjectNO()
+            ProjectList = New ObservableCollection(Of FormngProjModel)(projData)
+            ProjDG.ItemsSource = ProjectList
+
+            ProjDG.LoadPreset()
+
+            ' Restore project selection
+            Dim currentProjNo As String = Nothing
+            If selectedProjNo IsNot Nothing Then
+                Dim projRow = ProjectList.FirstOrDefault(Function(x) x.PROJECTNO = selectedProjNo)
+                If projRow IsNot Nothing Then
+                    ProjDG.SelectedItem = projRow
+                    ProjDG.UpdateLayout()
+                    ProjDG.ScrollIntoView(projRow)
+                    currentProjNo = projRow.PROJECTNO
+
+                End If
+
+
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error refreshing: " & ex.Message)
+        End Try
+    End Sub
 
 
 

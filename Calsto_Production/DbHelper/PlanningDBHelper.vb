@@ -77,7 +77,9 @@ Public Class PlanningDBHelper
                         .OP_Sequence = rdr("OP_Sequence").ToString(),
                         .Operation_ID = rdr("Operation_ID").ToString(),
                         .Created_date = rdr("Created_date"),
-                        .Created_by = rdr("Created_by").ToString()
+                        .Created_by = rdr("Created_by").ToString(),
+                        .Job_Qty = If(IsDBNull(rdr("Job_qty")), 0, Convert.ToInt32(rdr("Job_qty"))),
+                        .Ready_qty = If(IsDBNull(rdr("Ready_qty")), 0, Convert.ToInt32(rdr("Ready_qty")))
                     })
                 End While
             End Using

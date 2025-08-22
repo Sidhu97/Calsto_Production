@@ -117,7 +117,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="140"/>
             </Grid.RowDefinitions>
 
                       
@@ -288,6 +288,8 @@
                         <control:DataGridTextColumn Header="Operation" Binding="{Binding Operation_ID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                         <control:DataGridTextColumn Header="Created On" Binding="{Binding Created_date, StringFormat=\{0:dd-MM-yyyy\}}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                         <control:DataGridTextColumn Header="Created by" Binding="{Binding Created_by}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Available" Binding="{Binding Ready_qty}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Completed" Binding="{Binding Job_Qty}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     </control:FilterDataGrid.Columns>
                 </control:FilterDataGrid>
                 <Button Content="Delete Jobs" Grid.Column="1"  Margin="0,0,0,0" Background="red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand" Click="DeleteJobButton_Click"/>
