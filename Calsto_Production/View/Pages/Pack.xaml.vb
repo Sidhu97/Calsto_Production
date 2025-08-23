@@ -1,7 +1,0 @@
-﻿Class Pack
-
-
-
-
-
-End Class
