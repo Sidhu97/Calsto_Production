@@ -26,15 +26,31 @@
             <Setter Property="MinHeight" Value="22"/>
             <Setter Property="Padding" Value="6,2"/>
             <Style.Triggers>
+                <!-- Selected Row -->
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="LightBlue"/>
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
+                <!-- Hover -->
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="LightBlue"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" 
+     Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="LightBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
 
         <!-- Cell text style with trimming -->
         <Style x:Key="CellTextStyle" TargetType="{x:Type TextBlock}">
@@ -88,7 +104,7 @@
 
 
                         <TextBlock Text="Project:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
-                        <ComboBox x:Name="CMB_PackProj" Grid.Row="1" Grid.Column="1" Width="110" FontSize="12" Margin="0,3,0,5" VerticalAlignment="Center" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" HorizontalAlignment="Left"/>
+                        <ComboBox x:Name="CMB_PackProj" Grid.Row="1" Grid.Column="1" Width="110" FontSize="12" Margin="0,3,0,5" VerticalAlignment="Center" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" HorizontalAlignment="Left" IsEditable="True"/>
 
                         <Button x:Name="Btn_Projapply" Content="Apply" Grid.Row="1" Grid.Column="3" Width="80" Height="30" Margin="0,0,0,0" Click="Applybtn_Click" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
                         <Button x:Name="Btn_ProjClear" Content="Clear" Grid.Row="1" Grid.Column="4" Width="80" Height="30" Margin="0,0,0,0" Click="Clearbtn_Click" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
@@ -132,6 +148,7 @@
                 x:Name="ProjDG"
                 IsEnabled="false"
                  SelectionMode="Single"
+                    GotFocus="Projitemfocus"
  AutoGenerateColumns="False" 
  CanUserAddRows="False"
  ShowRowsCount="True"
@@ -164,13 +181,6 @@
                 </control:FilterDataGrid>
 
             </Grid>
-
-
-
-
-
-
-
 
 
         </Grid>
@@ -226,6 +236,7 @@
             <control:FilterDataGrid 
     x:Name="BundleDG"
     SelectionMode="Single"
+    SelectionChanged="BundleDG_sel_change"
     AutoGenerateColumns="False" 
     CanUserAddRows="False"
     ShowRowsCount="True"
@@ -260,8 +271,7 @@
                             <DataTemplate>
                                 <Button Content="Edit" 
                             Padding="4,2"
-                            Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=control:FilterDataGrid}}"
-                            CommandParameter="{Binding}" 
+                            Click="Bundledit_Click"
                             Background="#0078D7"
                             Foreground="White"
                             FontSize="11"
@@ -276,7 +286,7 @@
 
             <TextBlock Text="Bundle List Table:" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,0"  Grid.Row="1"/>
             <TextBlock Text="Bundle Item Table:" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,0"  Grid.Row="4" />
-            <Grid Grid.Row="5" IsEnabled="False" >
+            <Grid x:Name="Bundleeditpanel" Grid.Row="5" IsEnabled="False" >
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
@@ -286,8 +296,8 @@
 
 
                 <control:FilterDataGrid 
-                    x:Name="JobcardDG"
-
+                    x:Name="BundleitemDG"
+GotFocus="BundleitemFocus"
                     Grid.Column="1"
                     AutoGenerateColumns="False"    
                     ShowRowsCount="True"
@@ -306,12 +316,12 @@
                     CanUserSortColumns="True">
 
                     <control:FilterDataGrid.Columns>
-                        <control:DataGridTextColumn Header="Seq." Binding="{Binding OP_Sequence}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Job Card" Binding="{Binding JC_no}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Seq." Binding="{Binding PackID}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Job Card" Binding="{Binding Status}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                         <control:DataGridTextColumn Header="WID" Binding="{Binding WID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Operation" Binding="{Binding Operation_ID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Created On" Binding="{Binding Created_date}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Created by" Binding="{Binding Created_by}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Operation" Binding="{Binding PackEntryQty}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Created On" Binding="{Binding PackEntryDate}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Created by" Binding="{Binding UserID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     </control:FilterDataGrid.Columns>
                 </control:FilterDataGrid>
 
@@ -323,22 +333,21 @@
                         <Grid>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="10"/>
                                 <RowDefinition Height="0"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="60"/>
-                                <RowDefinition Height="500"/>
+                                <RowDefinition Height="50"/>
 
                             </Grid.RowDefinitions>
-                            
-                            <TextBlock Text="Package Type:" Grid.Row="2"  VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,0"/>
-                            <ComboBox Grid.Row="1" Grid.Column="0" Width="110" FontSize="12" Margin="0,3,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <TextBox Grid.Row="3"  Width="80" Height="20" Margin="5,3,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <Button Content="Add >>" Grid.Row="4"  Width="80" Height="25" Margin="5,0,5,0" Background="Green" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
-                            <Button Content=" Remove" Grid.Row="5"  Width="80" Height="25" Margin="5,0,5,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
-                            <Button Content="Close Pack" Grid.Row="6"  Width="80" Height="25" Margin="5,0,5,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
+
+                            <TextBlock Text="Qunatity" Grid.Row="2"  VerticalAlignment="Center" FontWeight="SemiBold" Margin="20,0,0,0"/>
+                            <TextBox x:Name="bndl_qty" Grid.Row="3"  Width="80" Height="20" Margin="5,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Button x:Name="bndl_apply" Content="Add >>" Grid.Row="4"  Width="80" Height="25" Margin="5,0,5,0" Background="Green" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
+                            <Button x:Name="bndl_remove" Content="X Remove" Grid.Row="5"  Width="80" Height="25" Margin="5,0,5,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
+                            <Button Content="Exit-->" Grid.Row="6"  Width="80" Height="25" Margin="5,0,5,0" Background="DarkRed" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand" Click="Editexit" />
                         </Grid>
 
                     </StackPanel>

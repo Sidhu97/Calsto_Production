@@ -6,6 +6,7 @@ Class Packing
 
     Private PackingJobList As ObservableCollection(Of PackingModel)
     Private PackingBundleList As ObservableCollection(Of PackingHeaderModel)
+    Private PackingBundleitemList As ObservableCollection(Of PackEntryModel)
     Private ProjectList As ObservableCollection(Of PackingProjModel)
 
 
@@ -21,6 +22,7 @@ Class Packing
         CMB_Packtype.DisplayMemberPath = "Packtype"
         CMB_Packtype.SelectedValuePath = "Packtype"
     End Sub
+
 
 
     Private Sub LoadProjects()
@@ -83,5 +85,78 @@ Class Packing
         CMB_PackProj.IsEnabled = True
         Btn_ProjClear.IsEnabled = False
     End Sub
+    Private Sub BundleDG_sel_change(sender As Object, e As RoutedEventArgs)
+
+        Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
+
+
+        If selectedBundle IsNot Nothing Then
+
+
+            Try
+                Dim data = PackingDBHelper.GetPackEntryList(selectedBundle.PackID)
+                PackingBundleitemList = New ObservableCollection(Of PackEntryModel)(data)
+                BundleitemDG.ItemsSource = PackingBundleitemList
+            Catch ex As Exception
+                MessageBox.Show("Error loading project list: " & ex.Message)
+            End Try
+        Else
+
+
+        End If
+
+    End Sub
+
+    Private Sub Bundledit_Click(sender As Object, e As RoutedEventArgs)
+
+        Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
+
+
+        If selectedBundle IsNot Nothing Then
+
+            Try
+                Dim data = PackingDBHelper.GetPackEntryList(selectedBundle.PackID)
+                PackingBundleitemList = New ObservableCollection(Of PackEntryModel)(data)
+                BundleitemDG.ItemsSource = PackingBundleitemList
+            Catch ex As Exception
+                MessageBox.Show("Error loading project list: " & ex.Message)
+            End Try
+            Bundleeditpanel.IsEnabled = True
+            BundleDG.IsEnabled = False
+        Else
+
+
+        End If
+
+    End Sub
+
+
+
+    Private Sub Projitemfocus(sender As Object, e As RoutedEventArgs)
+        bndl_apply.IsEnabled = True
+        bndl_qty.IsEnabled = True
+        bndl_remove.IsEnabled = False
+    End Sub
+
+
+    Private Sub BundleitemFocus(sender As Object, e As RoutedEventArgs)
+        bndl_apply.IsEnabled = False
+        bndl_qty.IsEnabled = False
+        bndl_qty.Text = ""
+        bndl_remove.IsEnabled = True
+
+    End Sub
+
+    Private Sub Editexit(sender As Object, e As RoutedEventArgs)
+
+        Bundleeditpanel.IsEnabled = False
+        bndl_qty.Text = ""
+        BundleDG.IsEnabled = True
+
+
+    End Sub
+
+
 
 End Class
+

@@ -45,3 +45,26 @@ Public Class PackingHeaderModel
     Public Property ProjNo As String
     Public Property CreatedBy As String
 End Class
+
+
+Public Class PackEntryModel
+    Public Property WID As String
+    Public Property PackEntryDate As Date?
+    Public Property PackType As String
+    Public Property PackEntryQty As Integer
+    Public Property PackID As String
+    Public Property PackEntryID As Integer
+    Public Property ProjNo As String
+    Public Property DispatchLocation As String
+    Public Property VehNo As String
+    Public Property DriverNo As String
+    Public Property DispatchedDate As Date?
+    Public Property Status As String
+    Public Property RecivedDate As Date?
+    Public Property UserID As String
+    Public Property SystemName As String
+    Public Property UnLoadUser As String
+    Public Property AttachFile As String
+    Public Property VehicleSerialNo As String
+    Public Property Reason As String
+End Class

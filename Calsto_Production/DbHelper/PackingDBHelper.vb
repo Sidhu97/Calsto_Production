@@ -131,4 +131,51 @@ Public Class PackingDBHelper
 #End Region
 
 
+
+#Region "Packdetails"
+    Public Shared Function GetPackEntryList(PackID As String) As List(Of PackEntryModel)
+        Dim PackEntries As New List(Of PackEntryModel)
+
+        Using con As New SqlConnection(conString)
+            Dim query As String = "SELECT * FROM PACK_ENTRY WHERE [PackID] = @PackID ORDER BY PackID"
+            Dim cmd As New SqlCommand(query, con)
+            cmd.Parameters.AddWithValue("@PackID", PackID)
+
+            Try
+                con.Open()
+                Dim reader As SqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim entry As New PackEntryModel With {
+                    .WID = reader("WID").ToString(),
+                    .PackEntryDate = If(IsDBNull(reader("Pack_entry_date")), Nothing, Convert.ToDateTime(reader("Pack_entry_date"))),
+                    .PackType = reader("Pack_type").ToString(),
+                    .PackEntryQty = If(IsDBNull(reader("Pack_entry_qty")), 0, Convert.ToInt32(reader("Pack_entry_qty"))),
+                    .PackID = reader("PackID").ToString(),
+                    .PackEntryID = Convert.ToInt32(reader("PackEntryID")),
+                    .ProjNo = reader("Proj_no").ToString(),
+                    .DispatchLocation = reader("Dispatch_Location").ToString(),
+                    .VehNo = reader("veh_no").ToString(),
+                    .DriverNo = reader("Driver_No").ToString(),
+                    .DispatchedDate = If(IsDBNull(reader("Dispatched_date")), Nothing, Convert.ToDateTime(reader("Dispatched_date"))),
+                    .Status = reader("Status").ToString(),
+                    .RecivedDate = If(IsDBNull(reader("Recived_date")), Nothing, Convert.ToDateTime(reader("Recived_date"))),
+                    .UserID = reader("USERID").ToString(),
+                    .SystemName = reader("SYSTEMNAME").ToString(),
+                    .UnLoadUser = reader("UnLoadUser").ToString(),
+                    .AttachFile = reader("AttachFile").ToString(),
+                    .VehicleSerialNo = reader("vehicle_SerialNo").ToString(),
+                    .Reason = reader("Reason").ToString()
+                }
+                    PackEntries.Add(entry)
+                End While
+            Catch ex As Exception
+                MessageBox.Show("Error loading Pack Entries: " & ex.Message)
+            End Try
+        End Using
+
+        Return PackEntries
+    End Function
+
+#End Region
+
 End Class
