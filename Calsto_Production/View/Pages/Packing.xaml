@@ -211,9 +211,7 @@
                         <TextBlock Text="Bundle  Type:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,8"/>
                         <ComboBox x:Name="CMB_Packtype" Grid.Row="1" Grid.Column="1" Width="110" FontSize="12" Margin="0,3,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <Button Content="Create Bundle" Grid.Row="1" Grid.Column="2" Width="80" Height="25" Margin="10,0,0,0" Background="Green" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
-                        <TextBlock Text="Package Type:" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                        <ComboBox Grid.Row="1" Grid.Column="4" Width="110" FontSize="12" Margin="0,3,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <Button Content="Apply" Grid.Row="1" Grid.Column="5" Width="70" Height="25" Margin="10,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
+                        
 
                     </Grid>
 
@@ -245,8 +243,8 @@
     CanUserSortColumns="True" Grid.Row="2">
 
                 <control:FilterDataGrid.Columns>
-                    <control:DataGridTextColumn Header="Job Card" Binding="{Binding JC_no}" Width="0" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="BOM Name" Binding="{Binding BOMName}" Width="130" IsColumnFiltered="True">
+                    <control:DataGridTextColumn Header="Project" Binding="{Binding ProjNo}" Width="0" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Pack ID" Binding="{Binding PackID}" Width="130" IsColumnFiltered="True">
                         <control:DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
                                 <Setter Property="FontWeight" Value="Bold"/>
@@ -254,17 +252,24 @@
                             </Style>
                         </control:DataGridTextColumn.ElementStyle>
                     </control:DataGridTextColumn>
-                    <control:DataGridTextColumn Header="Part Number" Binding="{Binding PartNumber}" Width="140" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="280" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Thick" Binding="{Binding Thick}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Unit Weight" Binding="{Binding UnitWeight}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Total Weight" Binding="{Binding TotalWeight}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Colour" Binding="{Binding Colour}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Qnty" Binding="{Binding BOMQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Produced Qty" Binding="{Binding ProducedQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Balance Qty" Binding="{Binding BalanceQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Pack Type" Binding="{Binding PackType}" Width="280" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Created By" Binding="{Binding CreatedBy}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Width" Binding="{Binding PackEntryDate}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTemplateColumn Header="Action" Width="50">
+                        <control:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Edit" 
+                            Padding="4,2"
+                            Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=control:FilterDataGrid}}"
+                            CommandParameter="{Binding}" 
+                            Background="#0078D7"
+                            Foreground="White"
+                            FontSize="11"
+                            BorderThickness="0"
+                            Cursor="Hand"/>
+                            </DataTemplate>
+                        </control:DataGridTemplateColumn.CellTemplate>
+                    </control:DataGridTemplateColumn>
                 </control:FilterDataGrid.Columns>
             </control:FilterDataGrid>
             <GridSplitter HorizontalAlignment="Stretch" Grid.Row="3"/>
@@ -329,6 +334,7 @@
                             </Grid.RowDefinitions>
                             
                             <TextBlock Text="Package Type:" Grid.Row="2"  VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,0"/>
+                            <ComboBox Grid.Row="1" Grid.Column="0" Width="110" FontSize="12" Margin="0,3,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <TextBox Grid.Row="3"  Width="80" Height="20" Margin="5,3,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <Button Content="Add >>" Grid.Row="4"  Width="80" Height="25" Margin="5,0,5,0" Background="Green" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
                             <Button Content=" Remove" Grid.Row="5"  Width="80" Height="25" Margin="5,0,5,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
