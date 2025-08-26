@@ -247,7 +247,6 @@ Public Class Forming
     End Sub
 
 
-
     Private Sub RefreshBOM()
         Try
             ' 1. Save current grid preset

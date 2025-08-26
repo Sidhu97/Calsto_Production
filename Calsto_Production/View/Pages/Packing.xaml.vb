@@ -1,6 +1,8 @@
 ﻿Imports System.Collections.ObjectModel
+Imports System.Data
 Imports Calsto_Production.PackingModel
 Imports DocumentFormat.OpenXml.Vml.Office
+Imports Microsoft.Data.SqlClient
 
 Class Packing
 
@@ -79,12 +81,15 @@ Class Packing
         CMB_Packtype.SelectedItem = ""
         ProjDG.ItemsSource = Nothing
         BundleDG.ItemsSource = Nothing
+        BundleitemDG.ItemsSource = Nothing
         ProjDG.IsEnabled = False
         Btn_Projapply.IsEnabled = True
         PROJPANEL.IsEnabled = False
         CMB_PackProj.IsEnabled = True
         Btn_ProjClear.IsEnabled = False
     End Sub
+
+
     Private Sub BundleDG_sel_change(sender As Object, e As RoutedEventArgs)
 
         Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
@@ -123,6 +128,8 @@ Class Packing
             End Try
             Bundleeditpanel.IsEnabled = True
             BundleDG.IsEnabled = False
+            exitpack.IsEnabled = True
+            createbundlepanel.isEnabled = False
         Else
 
 
@@ -152,9 +159,68 @@ Class Packing
         Bundleeditpanel.IsEnabled = False
         bndl_qty.Text = ""
         BundleDG.IsEnabled = True
-
+        exitpack.IsEnabled = False
+        createbundlepanel.isEnabled = True
+        BundleitemDG.ItemsSource = Nothing
 
     End Sub
+
+
+    Private Sub CreateBundle_Click(sender As Object, e As RoutedEventArgs)
+
+        Dim selectedProj = TryCast(CMB_PackProj.SelectedItem, PackingProjModel)
+        Dim selectedPacktype = TryCast(CMB_Packtype.SelectedItem, PackingTypeModel)
+        Dim createdBy As String = Environment.UserName
+        Dim Remarks As String = ""
+
+
+        If selectedPacktype Is Nothing Then
+            MessageBox.Show("Please select a Pack Type before creating a bundle.",
+                            "Missing Pack Type", MessageBoxButton.OK, MessageBoxImage.Warning)
+            Return
+        End If
+
+        ' Save to DB
+        PackingDBHelper.CreateBundle(selectedPacktype.Packtype, selectedProj.Proj_no, createdBy)
+
+        ' Success message
+        MessageBox.Show($"Lot entry applied for Project {selectedProj.Proj_no} with Pack Type {selectedPacktype.Packtype} successfully.",
+                        "Lot Entry", MessageBoxButton.OK, MessageBoxImage.Information)
+
+    End Sub
+
+
+
+
+    Private Sub Additem_Click(sender As Object, e As RoutedEventArgs)
+
+
+        Dim createdBy As String = Environment.UserName
+        Dim Remarks As String = ""
+        Dim SelectedProject = TryCast(ProjDG.SelectedItem, PackingModel)
+        Dim wid = SelectedProject.WID
+        Dim JCno = SelectedProject.JC_no
+        Dim qTY = bndl_qty.Text
+        Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
+        Dim Pid = selectedBundle.PackID
+        Dim Projno = selectedBundle.ProjNo
+        If bndl_qty.Text Is Nothing Then
+            MessageBox.Show("Please give valid Qty before Adding a Item.",
+                            "Valid Qty needed.", MessageBoxButton.OK, MessageBoxImage.Warning)
+            Return
+        End If
+
+
+        ' Save to DB
+        PackingDBHelper.Additemstobundle(wid, qTY, Pid, Projno, JCno, createdBy)
+
+        ' Success message
+        MessageBox.Show($"Lot entry applied for Project with Pack Type successfully.",
+                        "Lot Entry", MessageBoxButton.OK, MessageBoxImage.Information)
+
+    End Sub
+
+
 
 
 

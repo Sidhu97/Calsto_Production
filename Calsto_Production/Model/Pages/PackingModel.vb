@@ -13,6 +13,8 @@
     Public Property TotalWeight As Decimal
     Public Property Colour As String
     Public Property BOMQty As Integer
+
+    Public Property ReadyQty As Integer
     Public Property ProducedQty As Integer
     Public Property BalanceQty As Integer
     Public Property Status As String
@@ -48,23 +50,26 @@ End Class
 
 
 Public Class PackEntryModel
+    Public Property PID As String
+
     Public Property WID As String
-    Public Property PackEntryDate As Date?
-    Public Property PackType As String
-    Public Property PackEntryQty As Integer
-    Public Property PackID As String
-    Public Property PackEntryID As Integer
+
+    Public Property JCno As String
+
     Public Property ProjNo As String
-    Public Property DispatchLocation As String
-    Public Property VehNo As String
-    Public Property DriverNo As String
-    Public Property DispatchedDate As Date?
-    Public Property Status As String
-    Public Property RecivedDate As Date?
+
+
+    Public Property Description As String
+
+    Public Property Qty As Integer
+
+    Public Property ID As Integer
+
+    Public Property enterDate As Date?
+
     Public Property UserID As String
-    Public Property SystemName As String
-    Public Property UnLoadUser As String
-    Public Property AttachFile As String
-    Public Property VehicleSerialNo As String
-    Public Property Reason As String
+
+
+
+
 End Class

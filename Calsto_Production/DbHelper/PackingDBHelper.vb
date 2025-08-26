@@ -60,6 +60,7 @@ Public Class PackingDBHelper
                             .Colour = reader("Colour").ToString(),
                             .BOMQty = If(IsDBNull(reader("BOM Qty")), 0, Convert.ToInt32(reader("BOM Qty"))),
                             .ProducedQty = If(IsDBNull(reader("Produced Qty")), 0, Convert.ToInt32(reader("Produced Qty"))),
+                            .ReadyQty = If(IsDBNull(reader("Ready_Qty")), 0, Convert.ToInt32(reader("Ready_Qty"))),
                             .BalanceQty = If(IsDBNull(reader("Balance Qty")), 0, Convert.ToInt32(reader("Balance Qty"))),
                             .Status = reader("Status").ToString()
                         }
@@ -137,34 +138,24 @@ Public Class PackingDBHelper
         Dim PackEntries As New List(Of PackEntryModel)
 
         Using con As New SqlConnection(conString)
-            Dim query As String = "SELECT * FROM PACK_ENTRY WHERE [PackID] = @PackID ORDER BY PackID"
+            Dim query As String = "SELECT * FROM V_JOB_PACKeditems WHERE [PID] = @PID ORDER BY PID"
             Dim cmd As New SqlCommand(query, con)
-            cmd.Parameters.AddWithValue("@PackID", PackID)
+            cmd.Parameters.AddWithValue("@PID", PackID)
 
             Try
                 con.Open()
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
                 While reader.Read()
                     Dim entry As New PackEntryModel With {
+                    .ID = Convert.ToInt32(reader("ID")),
+                    .PID = reader("PID").ToString(),
                     .WID = reader("WID").ToString(),
-                    .PackEntryDate = If(IsDBNull(reader("Pack_entry_date")), Nothing, Convert.ToDateTime(reader("Pack_entry_date"))),
-                    .PackType = reader("Pack_type").ToString(),
-                    .PackEntryQty = If(IsDBNull(reader("Pack_entry_qty")), 0, Convert.ToInt32(reader("Pack_entry_qty"))),
-                    .PackID = reader("PackID").ToString(),
-                    .PackEntryID = Convert.ToInt32(reader("PackEntryID")),
                     .ProjNo = reader("Proj_no").ToString(),
-                    .DispatchLocation = reader("Dispatch_Location").ToString(),
-                    .VehNo = reader("veh_no").ToString(),
-                    .DriverNo = reader("Driver_No").ToString(),
-                    .DispatchedDate = If(IsDBNull(reader("Dispatched_date")), Nothing, Convert.ToDateTime(reader("Dispatched_date"))),
-                    .Status = reader("Status").ToString(),
-                    .RecivedDate = If(IsDBNull(reader("Recived_date")), Nothing, Convert.ToDateTime(reader("Recived_date"))),
-                    .UserID = reader("USERID").ToString(),
-                    .SystemName = reader("SYSTEMNAME").ToString(),
-                    .UnLoadUser = reader("UnLoadUser").ToString(),
-                    .AttachFile = reader("AttachFile").ToString(),
-                    .VehicleSerialNo = reader("vehicle_SerialNo").ToString(),
-                    .Reason = reader("Reason").ToString()
+                    .JCno = reader("JC_no").ToString(),
+                    .enterDate = If(IsDBNull(reader("date")), Nothing, Convert.ToDateTime(reader("date"))),
+                    .Description = reader("Description").ToString(),
+                    .Qty = If(IsDBNull(reader("qty")), 0, Convert.ToInt32(reader("qty"))),
+                    .UserID = reader("USERID").ToString()
                 }
                     PackEntries.Add(entry)
                 End While
@@ -177,5 +168,49 @@ Public Class PackingDBHelper
     End Function
 
 #End Region
+
+    Public Shared Sub CreateBundle(Packtype As String, Projno As String, Createdby As String)
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("sp_CreateBundle", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@Pack_type", Packtype)
+                cmd.Parameters.AddWithValue("@Proj_no", Projno)
+                cmd.Parameters.AddWithValue("@Createdby", Createdby)
+                con.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+
+
+
+    Public Shared Sub Additemstobundle(WID As String, Qty As Int32, PID As String, projno As String, JCno As String, createdBy As String)
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("sp_Addtobundle", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@WID", WID)
+                cmd.Parameters.AddWithValue("@Pack_type ", "")
+                cmd.Parameters.AddWithValue("@Pack_entry_qty", Qty)
+                cmd.Parameters.AddWithValue("@PackID ", PID)
+                cmd.Parameters.AddWithValue("@Proj_no", Qty)
+                cmd.Parameters.AddWithValue("@JC_no", JCno)
+                cmd.Parameters.AddWithValue("@Created_by ", createdBy)
+                con.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+
+
+
+
+
+
+
+
+
+
 
 End Class
