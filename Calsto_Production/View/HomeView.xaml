@@ -121,7 +121,7 @@
                         <Grid Background="White"/>
                     </TabItem>
                     <TabItem Header="COATING" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                        <Frame Source="Pages/Coating.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="OSP" FontSize="9" FontWeight="Bold">
                         <Grid Background="White"/>
