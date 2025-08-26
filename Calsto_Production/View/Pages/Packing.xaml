@@ -362,7 +362,7 @@ GotFocus="BundleitemFocus"
                             <TextBlock Text="Qunatity" Grid.Row="2"  VerticalAlignment="Center" FontWeight="SemiBold" Margin="20,0,0,0"/>
                             <TextBox x:Name="bndl_qty" Grid.Row="3"  IsEnabled="False"  Width="80" Height="20" Margin="5,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <Button x:Name="bndl_apply" Content="Add >>"  IsEnabled="False" Click ="Additem_Click" Grid.Row="4"  Width="80" Height="25" Margin="5,0,5,0" Background="Green" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
-                            <Button x:Name="bndl_remove" Content="X Remove" IsEnabled="False" Grid.Row="5"  Width="80" Height="25" Margin="5,0,5,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
+                            <Button x:Name="bndl_remove" Content="X Remove" IsEnabled="False" Grid.Row="5"  Width="80" Height="25" Margin="5,0,5,0" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  Click="Removeitem_Click"/>
                        
                         </Grid>
 

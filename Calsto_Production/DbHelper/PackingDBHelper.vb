@@ -205,7 +205,16 @@ Public Class PackingDBHelper
 
 
 
-
+    Public Shared Sub Removeitems(ID As Int32)
+        Using con As New SqlConnection(conString)
+            Using cmd As New SqlCommand("sp_DeletePackEntry", con)
+                cmd.CommandType = CommandType.StoredProcedure
+                cmd.Parameters.AddWithValue("@PackEntryID", ID)
+                con.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
 
 
 

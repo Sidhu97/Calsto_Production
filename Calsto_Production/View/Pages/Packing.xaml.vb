@@ -199,6 +199,7 @@ Class Packing
         Dim Remarks As String = ""
         Dim SelectedProject = TryCast(ProjDG.SelectedItem, PackingModel)
         Dim wid = SelectedProject.WID
+        Dim Description = SelectedProject.Description
         Dim JCno = SelectedProject.JC_no
         Dim qTY = bndl_qty.Text
         Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
@@ -215,10 +216,47 @@ Class Packing
         PackingDBHelper.Additemstobundle(wid, qTY, Pid, Projno, JCno, createdBy)
 
         ' Success message
-        MessageBox.Show($"Lot entry applied for Project with Pack Type successfully.",
-                        "Lot Entry", MessageBoxButton.OK, MessageBoxImage.Information)
+        MessageBox.Show($"Item:{Description} added to Bundle :{Pid} successfully.",
+                        "Add items to bundle", MessageBoxButton.OK, MessageBoxImage.Information)
 
     End Sub
+
+
+    Private Sub Removeitem_Click(sender As Object, e As RoutedEventArgs)
+
+        ' Validate Bundle selection
+        Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
+        If selectedBundle Is Nothing Then
+            MessageBox.Show("Please select a bundle before removing an item.",
+                            "Bundle not selected", MessageBoxButton.OK, MessageBoxImage.Warning)
+            Return
+        End If
+
+        ' Validate Project/Entry selection
+        Dim SelectedProject As PackEntryModel = TryCast(BundleitemDG.SelectedItem, PackEntryModel)
+        If SelectedProject Is Nothing Then
+            MessageBox.Show("Please select a project/item before removing it from the bundle.",
+                            "Item not selected", MessageBoxButton.OK, MessageBoxImage.Warning)
+            Return
+        End If
+
+        Dim Pid = selectedBundle.PackID
+        Dim Description = SelectedProject.Description
+        Dim PackEntryID = SelectedProject.ID
+
+        PackingDBHelper.Removeitems(PackEntryID)
+
+        ' Success message
+        MessageBox.Show($"Item: {Description} removed from Bundle: {Pid} successfully.",
+                        "Remove Item", MessageBoxButton.OK, MessageBoxImage.Information)
+
+    End Sub
+
+
+
+
+
+
 
 
 
