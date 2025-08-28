@@ -127,10 +127,11 @@
                         <Frame Source="Pages/OSP.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="STORES" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                        <Frame Source="Pages/Stores.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="INVENTORY" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                        <Frame Source="Pages/Inventory.xaml" NavigationUIVisibility="Hidden"/>
+                        
                     </TabItem>
                     <TabItem Header="PACKING" FontSize="9" FontWeight="Bold">
                         <Frame Source="Pages/Packing.xaml" NavigationUIVisibility="Hidden"/>
