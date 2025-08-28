@@ -115,16 +115,16 @@
                         <Frame Source="Pages/Forming.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="WELDING" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                        <Frame Source="Pages/Welding.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem Header="LASER/BENDING" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                    <TabItem Header="LASER" FontSize="9" FontWeight="Bold">
+                        <Frame Source="Pages/Welding.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="COATING" FontSize="9" FontWeight="Bold">
                         <Frame Source="Pages/Coating.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="OSP" FontSize="9" FontWeight="Bold">
-                        <Grid Background="White"/>
+                        <Frame Source="Pages/OSP.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem Header="STORES" FontSize="9" FontWeight="Bold">
                         <Grid Background="White"/>

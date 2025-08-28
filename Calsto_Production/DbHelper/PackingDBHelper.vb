@@ -1,4 +1,5 @@
-﻿Imports System.Configuration
+﻿Imports System.Collections.ObjectModel
+Imports System.Configuration
 Imports System.Data
 Imports Calsto_Production.PackingModel
 Imports DocumentFormat.OpenXml.Drawing.Diagrams
@@ -10,7 +11,7 @@ Public Class PackingDBHelper
 
 
 #Region "Project List"
-        Public Shared Function GetProjectList() As List(Of PackingProjModel)
+    Public Shared Function GetProjectList() As List(Of PackingProjModel)
         Dim Projectlist As New List(Of PackingProjModel)
         Using con As New SqlConnection(conString)
             con.Open()
@@ -29,22 +30,21 @@ Public Class PackingDBHelper
         Return Projectlist
     End Function
 
+
+
 #End Region
+    Public Shared Function GetPackingJobs(proNo As String) As List(Of PackingModel)
+        Dim PackingJobs As New List(Of PackingModel)
 
-
-        Public Shared Function GetPackingJobs(proNo As String) As List(Of PackingModel)
-            Dim PackingJobs As New List(Of PackingModel)
-
-            Using con As New SqlConnection(conString)
+        Using con As New SqlConnection(conString)
             ' Add WHERE clause to use the parameter
             Dim query As String = "SELECT * FROM V_JOB_PACKING WHERE [Proj_no] = @BOMNo"
             Dim cmd As New SqlCommand(query, con)
-                cmd.Parameters.AddWithValue("@BOMNo", proNo)
-
-                Try
-                    con.Open()
-                    Dim reader As SqlDataReader = cmd.ExecuteReader()
-                    While reader.Read()
+            cmd.Parameters.AddWithValue("@BOMNo", proNo)
+            Try
+                con.Open()
+                Dim reader As SqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
                     Dim job As New PackingModel With {
                             .WID = reader("WID").ToString(),
                             .BOMNo = reader("Proj_no").ToString(),
@@ -65,14 +65,16 @@ Public Class PackingDBHelper
                             .Status = reader("Status").ToString()
                         }
                     PackingJobs.Add(job)
-                    End While
-                Catch ex As Exception
-                    MessageBox.Show("Error loading Packing jobs: " & ex.Message)
-                End Try
-            End Using
+                End While
+            Catch ex As Exception
+                MessageBox.Show("Error loading Packing jobs: " & ex.Message)
+            End Try
+        End Using
 
-            Return PackingJobs
-        End Function
+        Return PackingJobs
+    End Function
+
+
 
 #Region "Bundle List"
 
@@ -185,36 +187,75 @@ Public Class PackingDBHelper
 
 
 
-    Public Shared Sub Additemstobundle(WID As String, Qty As Int32, PID As String, projno As String, JCno As String, createdBy As String)
-        Using con As New SqlConnection(conString)
-            Using cmd As New SqlCommand("sp_Addtobundle", con)
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.Parameters.AddWithValue("@WID", WID)
-                cmd.Parameters.AddWithValue("@Pack_type ", "")
-                cmd.Parameters.AddWithValue("@Pack_entry_qty", Qty)
-                cmd.Parameters.AddWithValue("@PackID ", PID)
-                cmd.Parameters.AddWithValue("@Proj_no", Qty)
-                cmd.Parameters.AddWithValue("@JC_no", JCno)
-                cmd.Parameters.AddWithValue("@Created_by ", createdBy)
-                con.Open()
-                cmd.ExecuteNonQuery()
+    Public Shared Function Additemstobundle(WID As String, Qty As Int32, PID As String, projno As String, JCno As String, createdBy As String) As Boolean
+        Try
+            Using con As New SqlConnection(conString)
+                Using cmd As New SqlCommand("sp_Addtobundle", con)
+                    cmd.CommandType = CommandType.StoredProcedure
+
+                    ' ✅ Correct parameters (no trailing spaces, right mapping)
+                    cmd.Parameters.AddWithValue("@WID", WID)
+                    cmd.Parameters.AddWithValue("@Pack_type", "") ' If you plan to use later, keep it
+                    cmd.Parameters.AddWithValue("@Pack_entry_qty", Qty)
+                    cmd.Parameters.AddWithValue("@PackID", PID)
+                    cmd.Parameters.AddWithValue("@Proj_no", projno)
+                    cmd.Parameters.AddWithValue("@JC_no", JCno)
+                    cmd.Parameters.AddWithValue("@Created_by", createdBy)
+
+                    con.Open()
+                    Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+
+                    ' ✅ Return True if insert worked
+                    Return rowsAffected > 0
+                End Using
             End Using
-        End Using
-    End Sub
+
+        Catch ex As SqlException
+            MessageBox.Show("Database error while inserting bundle item: " & ex.Message,
+                        "SQL Error", MessageBoxButton.OK, MessageBoxImage.Error)
+            Return False
+
+        Catch ex As Exception
+            MessageBox.Show("Unexpected error: " & ex.Message,
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+            Return False
+        End Try
+    End Function
 
 
 
 
-    Public Shared Sub Removeitems(ID As Int32)
-        Using con As New SqlConnection(conString)
-            Using cmd As New SqlCommand("sp_DeletePackEntry", con)
-                cmd.CommandType = CommandType.StoredProcedure
-                cmd.Parameters.AddWithValue("@PackEntryID", ID)
-                con.Open()
-                cmd.ExecuteNonQuery()
+
+    Public Shared Function Removeitems(ID As Int32) As Boolean
+        Try
+            Using con As New SqlConnection(conString)
+                Using cmd As New SqlCommand("sp_DeletePackEntry", con)
+                    cmd.CommandType = CommandType.StoredProcedure
+                    cmd.Parameters.AddWithValue("@PackEntryID", ID)
+
+                    con.Open()
+                    Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+
+                    ' Return True only if something was deleted
+                    Return rowsAffected > 0
+                End Using
             End Using
-        End Using
-    End Sub
+
+        Catch ex As SqlException
+            ' SQL Server related error
+            MessageBox.Show("Database error while deleting: " & ex.Message,
+                        "SQL Error", MessageBoxButton.OK, MessageBoxImage.Error)
+            Return False
+
+        Catch ex As Exception
+            ' Any other error
+            MessageBox.Show("Unexpected error: " & ex.Message,
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+            Return False
+        End Try
+    End Function
+
+
 
 
 

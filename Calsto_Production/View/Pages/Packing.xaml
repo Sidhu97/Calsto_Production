@@ -200,7 +200,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border x:Name="createbundlepanel"  Background="White" CornerRadius="6" Padding="5" IsEnabled="False" BorderBrush="#D1D9E6" BorderThickness="1" Grid.Row="0">
+            <Border x:Name="createbundlepanel"  Background="White" CornerRadius="6" Padding="5" IsEnabled="True" BorderBrush="#D1D9E6" BorderThickness="1" Grid.Row="0">
                 <StackPanel Margin="10,0,0,0">
                     <TextBlock Text="BUNDLE DETAILS" FontWeight="SemiBold" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
 

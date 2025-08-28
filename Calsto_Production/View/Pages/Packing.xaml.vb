@@ -87,10 +87,11 @@ Class Packing
         PROJPANEL.IsEnabled = False
         CMB_PackProj.IsEnabled = True
         Btn_ProjClear.IsEnabled = False
+        Editexit()
     End Sub
 
 
-    Private Sub BundleDG_sel_change(sender As Object, e As RoutedEventArgs)
+    Private Sub BundleDG_sel_change()
 
         Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
 
@@ -139,14 +140,14 @@ Class Packing
 
 
 
-    Private Sub Projitemfocus(sender As Object, e As RoutedEventArgs)
+    Private Sub Projitemfocus()
         bndl_apply.IsEnabled = True
         bndl_qty.IsEnabled = True
         bndl_remove.IsEnabled = False
     End Sub
 
 
-    Private Sub BundleitemFocus(sender As Object, e As RoutedEventArgs)
+    Private Sub BundleitemFocus()
         bndl_apply.IsEnabled = False
         bndl_qty.IsEnabled = False
         bndl_qty.Text = ""
@@ -154,16 +155,19 @@ Class Packing
 
     End Sub
 
-    Private Sub Editexit(sender As Object, e As RoutedEventArgs)
 
+
+    Private Sub Editexit()
         Bundleeditpanel.IsEnabled = False
         bndl_qty.Text = ""
         BundleDG.IsEnabled = True
         exitpack.IsEnabled = False
-        createbundlepanel.isEnabled = True
+        createbundlepanel.IsEnabled = True
         BundleitemDG.ItemsSource = Nothing
 
     End Sub
+
+
 
 
     Private Sub CreateBundle_Click(sender As Object, e As RoutedEventArgs)
@@ -186,6 +190,14 @@ Class Packing
         ' Success message
         MessageBox.Show($"Lot entry applied for Project {selectedProj.Proj_no} with Pack Type {selectedPacktype.Packtype} successfully.",
                         "Lot Entry", MessageBoxButton.OK, MessageBoxImage.Information)
+
+
+
+        If selectedProj IsNot Nothing Then
+            Txt_customer.Text = selectedProj.Customer
+
+            LoadBundles(selectedProj.Proj_no)
+        End If
 
     End Sub
 
@@ -218,6 +230,8 @@ Class Packing
         ' Success message
         MessageBox.Show($"Item:{Description} added to Bundle :{Pid} successfully.",
                         "Add items to bundle", MessageBoxButton.OK, MessageBoxImage.Information)
+        BundleDG_sel_change()
+        RefreshBOM()
 
     End Sub
 
@@ -249,11 +263,53 @@ Class Packing
         ' Success message
         MessageBox.Show($"Item: {Description} removed from Bundle: {Pid} successfully.",
                         "Remove Item", MessageBoxButton.OK, MessageBoxImage.Information)
+        BundleDG_sel_change()
+        RefreshBOM()
 
     End Sub
 
 
 
+    Private Sub RefreshBOM()
+        Try
+            ' 1. Save current grid preset
+            ProjDG.SavePreset()
+
+            ' 2. Remember currently selected WID
+            Dim selectedWID As String = Nothing
+            If ProjDG.SelectedItem IsNot Nothing Then
+                selectedWID = CType(ProjDG.SelectedItem, PackingModel).WID
+            End If
+
+            ' 3. Get current project number
+            Dim selectedProj = TryCast(CMB_PackProj.SelectedItem, PackingProjModel)
+            If selectedProj Is Nothing Then Exit Sub
+            Dim proNo = selectedProj.Proj_no
+
+            ' 4. Reload BOM items from database
+            Dim data = PackingDBHelper.GetPackingJobs(proNo)
+            PackingJobList = New ObservableCollection(Of PackingModel)(data)
+            ProjDG.ItemsSource = PackingJobList
+
+            ' 5. Restore grid preset
+            ProjDG.LoadPreset()
+
+            ' 6. Determine which item to select
+            Dim rowToSelect = PackingJobList.FirstOrDefault(Function(x) x.WID = selectedWID)
+
+            If rowToSelect IsNot Nothing Then
+                ' 7. Select row and scroll into view
+                ProjDG.SelectedItem = rowToSelect
+                ProjDG.UpdateLayout()
+                ProjDG.ScrollIntoView(rowToSelect)
+
+
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error refreshing BOM: " & ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+        End Try
+    End Sub
 
 
 

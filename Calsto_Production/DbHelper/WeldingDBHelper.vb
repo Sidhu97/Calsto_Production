@@ -2,20 +2,20 @@
 Imports System.Data
 Imports Microsoft.Data.SqlClient
 
-Public Class CoatingDBHelper
+Public Class WeldingDBHelper
 
     Private Shared ReadOnly conString As String = ConfigurationManager.ConnectionStrings("Db_Server").ConnectionString
 
 
 #Region "Project List"
-    Public Shared Function GetProjectNO() As List(Of CoatingProjModel)
-        Dim Projectlist As New List(Of CoatingProjModel)
+    Public Shared Function GetProjectNO() As List(Of WeldingProjModel)
+        Dim Projectlist As New List(Of WeldingProjModel)
         Using con As New SqlConnection(conString)
             con.Open()
-            Using cmd As New SqlCommand("SELECT * FROM V_PROJ_Coating", con)
+            Using cmd As New SqlCommand("SELECT * FROM V_PROJ_Welding", con)
                 Using rdr = cmd.ExecuteReader()
                     While rdr.Read()
-                        Projectlist.Add(New CoatingProjModel With {
+                        Projectlist.Add(New WeldingProjModel With {
                             .PROJECTNO = rdr("PRO_No").ToString(),
                             .Customer = rdr("Customer").ToString(),
                             .Status = rdr("Status").ToString()
@@ -29,13 +29,13 @@ Public Class CoatingDBHelper
 
 #End Region
 
-#Region "Get Coating Jobs"
-    Public Shared Function GetCoatingJobs(proNo As String) As List(Of CoatingModel)
-        Dim CoatingJobs As New List(Of CoatingModel)
+#Region "Get Welding Jobs"
+    Public Shared Function GetWeldingJobs(proNo As String) As List(Of WeldingModel)
+        Dim WeldingJobs As New List(Of WeldingModel)
 
         Using con As New SqlConnection(conString)
             ' Add WHERE clause to use the parameter
-            Dim query As String = "SELECT * FROM V_JOB_Coating WHERE [BOM No.] = @BOMNo"
+            Dim query As String = "SELECT * FROM V_JOB_Welding WHERE [BOM No.] = @BOMNo"
             Dim cmd As New SqlCommand(query, con)
             cmd.Parameters.AddWithValue("@BOMNo", proNo)
 
@@ -43,7 +43,7 @@ Public Class CoatingDBHelper
                 con.Open()
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
                 While reader.Read()
-                    Dim job As New CoatingModel With {
+                    Dim job As New WeldingModel With {
                         .WID = reader("WID").ToString(),
                         .BOMNo = reader("BOM No.").ToString(),
                         .BOMName = reader("BOM Name").ToString(),
@@ -57,27 +57,26 @@ Public Class CoatingDBHelper
                         .TotalWeight = If(IsDBNull(reader("Total Weight")), 0D, Convert.ToDecimal(reader("Total Weight"))),
                         .Colour = reader("Colour").ToString(),
                         .BOMQty = If(IsDBNull(reader("BOM Qty")), 0, Convert.ToInt32(reader("BOM Qty"))),
-                        .ReadyQty = If(IsDBNull(reader("Ready_Qty")), 0, Convert.ToInt32(reader("Ready_Qty"))),
                         .ProducedQty = If(IsDBNull(reader("Produced Qty")), 0, Convert.ToInt32(reader("Produced Qty"))),
                         .BalanceQty = If(IsDBNull(reader("Balance Qty")), 0, Convert.ToInt32(reader("Balance Qty"))),
                         .Status = reader("Status").ToString()
                     }
-                    CoatingJobs.Add(job)
+                    WeldingJobs.Add(job)
                 End While
             Catch ex As Exception
-                MessageBox.Show("Error loading Coating jobs: " & ex.Message)
+                MessageBox.Show("Error loading Welding jobs: " & ex.Message)
             End Try
         End Using
 
-        Return CoatingJobs
+        Return WeldingJobs
     End Function
 
 #End Region
 
 
-#Region "Get Coating LOT IDs"
-    Public Shared Function GetCoatingLots(Jobno As String) As List(Of CoatingLotModel)
-        Dim Coatinglots As New List(Of CoatingLotModel)
+#Region "Get Welding LOT IDs"
+    Public Shared Function GetWeldingLots(Jobno As String) As List(Of WeldingLotModel)
+        Dim Weldinglots As New List(Of WeldingLotModel)
 
         Using con As New SqlConnection(conString)
             ' Add WHERE clause to use the parameter
@@ -89,7 +88,7 @@ Public Class CoatingDBHelper
                 con.Open()
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
                 While reader.Read()
-                    Dim job As New CoatingLotModel With {
+                    Dim job As New WeldingLotModel With {
                         .Transaction_ID = Convert.ToInt32(reader("Transaction_ID")),
                         .JC_no = reader("JC_no").ToString(),
                             .Lot_id = reader("Lot_id").ToString(),
@@ -99,14 +98,14 @@ Public Class CoatingDBHelper
                             .Done_by = If(IsDBNull(reader("Done_by")), String.Empty, reader("Done_by").ToString()),
                             .Moved_to = If(IsDBNull(reader("Moved_to")), String.Empty, reader("Moved_to").ToString())
                     }
-                    Coatinglots.Add(job)
+                    Weldinglots.Add(job)
                 End While
             Catch ex As Exception
                 MessageBox.Show("Error loading Lot IDs: " & ex.Message)
             End Try
         End Using
 
-        Return Coatinglots
+        Return Weldinglots
     End Function
 
 #End Region
@@ -129,7 +128,7 @@ Public Class CoatingDBHelper
 
 
 
-#Region "Edit Coating LOT"
+#Region "Edit Welding LOT"
     Public Shared Function EditLotEntry(TransId As String, lotId As String, newQty As Integer, updatedBy As String, remarks As String) As Boolean
         Using con As New SqlConnection(conString)
             Using cmd As New SqlCommand("sp_UpdateJobCardEntry", con)

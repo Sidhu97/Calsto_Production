@@ -4,8 +4,8 @@
       xmlns:control="clr-namespace:FilterDataGrid;assembly=FilterDataGrid"
       xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      mc:Ignorable="av" x:Class="Coating"
-      Title="Coating" Background="#FAFAFA" 
+      mc:Ignorable="av" x:Class="Welding"
+      Title="Welding" Background="#FAFAFA" 
     FontFamily="Segoe UI" 
     FontSize="11" 
     av:DesignHeight="594.701">
@@ -215,16 +215,14 @@
                     </control:DataGridTextColumn>
                     
                     <control:DataGridTextColumn Header="Part Number" Binding="{Binding PartNumber}" Width="140" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="BOM Qnty" Binding="{Binding BOMQty}" Foreground="Black"  FontWeight="Bold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="280" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Thick" Binding="{Binding Thick}" Width="60" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Unit Weight" Binding="{Binding UnitWeight}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Total Weight" Binding="{Binding TotalWeight}" Width="80" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Total Weight" Binding="{Binding TotalWeight}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Colour" Binding="{Binding Colour}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-
-                    <control:DataGridTextColumn Header="Ready Qnty" Binding="{Binding ReadyQty}" Foreground="DarkGreen"  FontWeight="Bold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                    <control:DataGridTextColumn Header="Qnty" Binding="{Binding BOMQty}" Foreground="Black"  FontWeight="Bold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Completed" Binding="{Binding ProducedQty}" Foreground="Green"  FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Pending" Binding="{Binding BalanceQty}" Foreground="Red" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Status" Binding="{Binding Status}" FontWeight="SemiBold" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource Jobstatusstyle}" />

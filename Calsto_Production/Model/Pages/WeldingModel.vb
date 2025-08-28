@@ -1,5 +1,5 @@
 ﻿
-Public Class CoatingProjModel
+Public Class WeldingProjModel
     ' This may contain header-level info like PROJECTNO etc.
     Public Property PROJECTNO As String
     Public Property Customer As String
@@ -11,7 +11,7 @@ End Class
 
 
 
-Public Class CoatingModel
+Public Class WeldingModel
 
     Public Property WID As String
     Public Property BOMNo As String
@@ -27,8 +27,6 @@ Public Class CoatingModel
     Public Property TotalWeight As Decimal
     Public Property Colour As String
     Public Property BOMQty As Integer
-
-    Public Property ReadyQty As Integer
     Public Property ProducedQty As Integer
     Public Property BalanceQty As Integer
     Public Property Status As String
@@ -37,7 +35,7 @@ End Class
 
 
 
-Public Class CoatingLotModel
+Public Class WeldingLotModel
 
     Public Property Transaction_ID As String
     Public Property JC_no As String
