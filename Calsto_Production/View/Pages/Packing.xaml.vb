@@ -1,8 +1,9 @@
 ﻿Imports System.Collections.ObjectModel
-Imports System.Data
-Imports Calsto_Production.PackingModel
-Imports DocumentFormat.OpenXml.Vml.Office
-Imports Microsoft.Data.SqlClient
+Imports System.Drawing
+Imports System.IO
+Imports ZXing
+Imports ZXing.Common
+
 
 Class Packing
 
@@ -331,6 +332,7 @@ Class Packing
         End If
 
     End Sub
+
 
 
 

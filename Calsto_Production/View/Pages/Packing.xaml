@@ -108,7 +108,7 @@
 
                         <Button x:Name="Btn_Projapply" Content="Apply" Grid.Row="1" Grid.Column="3" Width="80" Height="30" Margin="0,0,0,0" Click="Applybtn_Click" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
 
-                        <Button x:Name="Btn_Printslip" Content="Print" Grid.Row="1" Grid.Column="5" Width="80" Height="30" Margin="0,0,0,0" Click="openpackingslip" Background="Purple" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
+                      
                         <Button x:Name="Btn_ProjClear" Content="Clear" Grid.Row="1" Grid.Column="4" Width="80" Height="30" Margin="0,0,0,0" Click="Clearbtn_Click" Background="Red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand"  />
                         <TextBlock Text="Customer:" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,8"/>
                         
@@ -280,6 +280,20 @@
                             FontSize="11"
                             BorderThickness="0"
                             Cursor="Hand"/>
+                            </DataTemplate>
+                        </control:DataGridTemplateColumn.CellTemplate>
+                    </control:DataGridTemplateColumn>
+                    <control:DataGridTemplateColumn Header="Action" Width="70">
+                        <control:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Pack Slip" 
+        Padding="4,2"
+        Click="openpackingslip"
+        Background="Purple"
+        Foreground="White"
+        FontSize="11"
+        BorderThickness="0"
+        Cursor="Hand"/>
                             </DataTemplate>
                         </control:DataGridTemplateColumn.CellTemplate>
                     </control:DataGridTemplateColumn>

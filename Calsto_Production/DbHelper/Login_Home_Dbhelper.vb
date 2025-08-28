@@ -1,25 +1,37 @@
 ﻿Imports System.Data
 Imports System.Configuration
 Imports Microsoft.Data.SqlClient
+Imports System.Net.NetworkInformation
+
+' Define a simple User class
 
 Public Class Login_Home_Dbhelper
 
     Private Shared ReadOnly connectionString As String = ConfigurationManager.ConnectionStrings("Db_Server").ConnectionString
 
+    ' Get a new SQL connection
     Public Shared Function GetConnection() As SqlConnection
         Return New SqlConnection(connectionString)
     End Function
 
-    ' Validate user credentials; returns User object if successful, Nothing otherwise.
-    Public Shared Function ValidateUser(userId As String, password As String) As User
+    ' Validate user credentials; returns User object if successful, Nothing otherwise
+    Public Shared Function ValidateUserWithRole(userId As String, password As String) As User
         Using conn As SqlConnection = GetConnection()
-            Dim cmd As New SqlCommand("SELECT UserID, Name, Email, Role FROM USERDETAILS WHERE UserID = @UserID AND Password = @Password", conn)
+            Dim cmd As New SqlCommand("
+                SELECT u.id AS UserID, u.FullName AS Name, u.Mail AS Email, r.RoleName AS Role
+                FROM User_Management u
+                INNER JOIN UserRoles ur ON u.id = ur.UserID
+                INNER JOIN Roles r ON ur.RoleID = r.RoleID
+                WHERE u.UserName = @UserID AND u.Pwd = @Password AND u.IsDelete = 0
+            ", conn)
+
             cmd.Parameters.AddWithValue("@UserID", userId)
             cmd.Parameters.AddWithValue("@Password", password)
+
             conn.Open()
             Using rdr = cmd.ExecuteReader()
                 If rdr.Read() Then
-                    ' Success: return User object
+                    ' Return a User object with role
                     Return New User With {
                         .UserID = rdr("UserID").ToString(),
                         .Name = rdr("Name").ToString(),
@@ -29,54 +41,35 @@ Public Class Login_Home_Dbhelper
                 End If
             End Using
         End Using
-        ' Failed
+
+        ' Login failed
         Return Nothing
     End Function
 
-    ' Optional: Logs every login attempt
+    ' Log every login attempt
     Public Shared Sub LogLogin(userId As String, success As Boolean, message As String)
         Using conn As SqlConnection = GetConnection()
-            Dim cmd As New SqlCommand("INSERT INTO LOGIN_LOG (USERID, SYSTEMNAME, MACADDRESS, STATUS, MESSAGE) VALUES (@USERID, @SYSTEMNAME, @MAC, @STATUS, @MSG)", conn)
+            Dim cmd As New SqlCommand("
+                INSERT INTO LOGIN_LOG (USERID, SYSTEMNAME, MACADDRESS, STATUS, MESSAGE)
+                VALUES (@USERID, @SYSTEMNAME, @MAC, @STATUS, @MSG)
+            ", conn)
+
             cmd.Parameters.AddWithValue("@USERID", userId)
             cmd.Parameters.AddWithValue("@SYSTEMNAME", Environment.MachineName)
             cmd.Parameters.AddWithValue("@MAC", GetMacAddress())
             cmd.Parameters.AddWithValue("@STATUS", If(success, "Success", "Failed"))
             cmd.Parameters.AddWithValue("@MSG", message)
+
             conn.Open()
             cmd.ExecuteNonQuery()
         End Using
     End Sub
 
-    ' Version check: Does the specified product match the required version?
-    Public Shared Function CheckVersion(appVersion As String, product As String) As Boolean
-        Using conn As SqlConnection = GetConnection()
-            Dim cmd As New SqlCommand("SELECT [Version] FROM VERSION_TABLE WHERE Product = @Product", conn)
-            cmd.Parameters.AddWithValue("@Product", product)
-            conn.Open()
-            Dim dbVersion = TryCast(cmd.ExecuteScalar(), String)
-            Return dbVersion = appVersion
-        End Using
-    End Function
-
-    ' Get user details (whole row as datatable - for HomeView, if needed)
-    Public Shared Function GetUserDetails(userId As String) As DataTable
-        Dim table As New DataTable()
-        Using conn As SqlConnection = GetConnection()
-            Dim cmd As New SqlCommand("SELECT * FROM USERDETAILS WHERE UserID = @UserID", conn)
-            cmd.Parameters.AddWithValue("@UserID", userId)
-            conn.Open()
-            Using reader As SqlDataReader = cmd.ExecuteReader()
-                table.Load(reader)
-            End Using
-        End Using
-        Return table
-    End Function
-
-    ' Get first active MAC address
+    ' Get the first active MAC address
     Public Shared Function GetMacAddress() As String
-        For Each nic In Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
-            If nic.OperationalStatus = Net.NetworkInformation.OperationalStatus.Up AndAlso
-                Not String.IsNullOrEmpty(nic.GetPhysicalAddress().ToString()) Then
+        For Each nic As NetworkInterface In NetworkInterface.GetAllNetworkInterfaces()
+            If nic.OperationalStatus = OperationalStatus.Up AndAlso
+               Not String.IsNullOrEmpty(nic.GetPhysicalAddress().ToString()) Then
                 Return nic.GetPhysicalAddress().ToString()
             End If
         Next
