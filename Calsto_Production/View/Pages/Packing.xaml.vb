@@ -314,7 +314,23 @@ Class Packing
 
 
 
+    Private Sub openpackingslip()
 
+        Dim selectedBundle As PackingHeaderModel = TryCast(BundleDG.SelectedItem, PackingHeaderModel)
+        Dim packID = selectedBundle.PackID
+
+        Dim header = PackingSlipDBHelper.GetPackingHeader(packID)
+        If header IsNot Nothing Then
+            header.Items = PackingSlipDBHelper.GetPackingItems(packID)
+
+            ' Pass to your FlowDocument Window
+            Dim slipWin As New PackingSlipWindow(header)
+            slipWin.ShowDialog()
+        Else
+            MessageBox.Show("No data found for PackID " & packID)
+        End If
+
+    End Sub
 
 
 
