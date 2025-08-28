@@ -40,7 +40,7 @@
                 TabPacking.Visibility = Visibility.Visible
                 TabDispatch.Visibility = Visibility.Visible
 
-            Case "Manager"
+            Case "Production"
                 TabDashboard.Visibility = Visibility.Visible
                 TabPlanning.Visibility = Visibility.Visible
                 TabForming.Visibility = Visibility.Visible
