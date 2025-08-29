@@ -129,4 +129,11 @@ Class LoginView
         Application.Current.Shutdown()
     End Sub
 
+
+    Private Sub btnClose_Click(sender As Object, e As MouseButtonEventArgs)
+        Me.Close()
+        Application.Current.Shutdown()
+    End Sub
+
+
 End Class
