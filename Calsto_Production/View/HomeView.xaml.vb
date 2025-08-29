@@ -1,60 +1,42 @@
-﻿Class HomeView
+﻿Imports System.Windows
+Imports System.Windows.Controls
 
-    Private _currentUser As User
+Public Class HomeView
+    Private ReadOnly _currentUser As User
 
     ' Constructor accepts logged-in user
     Public Sub New(user As User)
         InitializeComponent()
         _currentUser = user
-
+        loggeduser.Text = user.Name
         ApplyRoleBasedAccess()
     End Sub
 
+    ''' <summary>
+    ''' Apply dynamic access control based on DB permissions
+    ''' </summary>
     Private Sub ApplyRoleBasedAccess()
         ' Hide all tabs first
-        TabDashboard.Visibility = Visibility.Collapsed
-        TabPlanning.Visibility = Visibility.Collapsed
-        TabForming.Visibility = Visibility.Collapsed
-        TabWelding.Visibility = Visibility.Collapsed
-        TabLaser.Visibility = Visibility.Collapsed
-        TabCoating.Visibility = Visibility.Collapsed
-        TabOsp.Visibility = Visibility.Collapsed
-        TabStores.Visibility = Visibility.Collapsed
-        TabInventory.Visibility = Visibility.Collapsed
-        TabPacking.Visibility = Visibility.Collapsed
-        TabDispatch.Visibility = Visibility.Collapsed
+        For Each item As TabItem In HomeTabControl.Items
+            item.Visibility = Visibility.Collapsed
+        Next
 
-        ' Show tabs based on user role
-        Select Case _currentUser.Role
-            Case "Admin"
-                ' Admin sees everything
-                TabDashboard.Visibility = Visibility.Visible
-                TabPlanning.Visibility = Visibility.Visible
-                TabForming.Visibility = Visibility.Visible
-                TabWelding.Visibility = Visibility.Visible
-                TabLaser.Visibility = Visibility.Visible
-                TabCoating.Visibility = Visibility.Visible
-                TabOsp.Visibility = Visibility.Visible
-                TabStores.Visibility = Visibility.Visible
-                TabInventory.Visibility = Visibility.Visible
-                TabPacking.Visibility = Visibility.Visible
-                TabDispatch.Visibility = Visibility.Visible
+        ' Show tabs if user has CanView permission
+        For Each perm As Permission In _currentUser.Permissions
+            Dim tab As TabItem = TryCast(HomeTabControl.FindName("Tab" & perm.TabName), TabItem)
 
-            Case "Production"
-                TabDashboard.Visibility = Visibility.Visible
-                TabPlanning.Visibility = Visibility.Visible
-                TabForming.Visibility = Visibility.Visible
-                TabWelding.Visibility = Visibility.Visible
-                TabCoating.Visibility = Visibility.Visible
-                TabInventory.Visibility = Visibility.Visible
-                TabPacking.Visibility = Visibility.Visible
+            If tab IsNot Nothing AndAlso perm.CanView Then
+                tab.Visibility = Visibility.Visible
 
-            Case "User"
-                TabDashboard.Visibility = Visibility.Visible
-                TabPlanning.Visibility = Visibility.Visible
-                TabInventory.Visibility = Visibility.Visible
-                TabPacking.Visibility = Visibility.Visible
-        End Select
+                ' Optional: disable edit-only sections inside the tab
+                If Not perm.CanEdit Then
+                    Dim editPanel As FrameworkElement = TryCast(tab.FindName("EditPanel"), FrameworkElement)
+                    If editPanel IsNot Nothing Then
+                        editPanel.IsEnabled = False
+                    End If
+                End If
+            End If
+        Next
     End Sub
 
 End Class

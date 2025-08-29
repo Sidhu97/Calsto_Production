@@ -108,37 +108,51 @@
                     <TabItem x:Name="TabDashboard" Header="DASHBOARD" FontSize="9" FontWeight="Bold">
                         <Frame Source="Pages/Dashboard.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabPlanning" Header="PLANNING" FontSize="9" FontWeight="Bold">
+                    <TabItem x:Name="TabPlanning" Header="PLANNING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Planning.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabForming" Header="FORMING" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabForming" Header="FORMING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Forming.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabWelding" Header="WELDING" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabWelding" Header="WELDING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Welding.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabLaser" Header="LASER" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabLaser" Header="LASER" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Welding.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabCoating" Header="COATING" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabCoating" Header="COATING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Coating.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabOsp" Header="OSP" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabOsp" Header="OSP" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/OSP.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabStores" Header="STORES" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabStores" Header="STORES" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Stores.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabInventory" Header="INVENTORY" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabInventory" Header="INVENTORY" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Inventory.xaml" NavigationUIVisibility="Hidden"/>
-                        
                     </TabItem>
-                    <TabItem x:Name="TabPacking" Header="PACKING" FontSize="9" FontWeight="Bold">
+                    
+                    <TabItem x:Name="TabPacking" Header="PACKING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Packing.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    <TabItem x:Name="TabDispatch" Header="DISPATCH" FontSize="9" FontWeight="Bold">
+                    
+                    
+                    <TabItem x:Name="TabDispatch" Header="DISPATCH" FontSize="10" FontWeight="Bold">
                         <Grid Background="White"/>
                     </TabItem>
+                    
+                    
+                    <TabItem x:Name="TabSettings" Header="SETTINGS" FontSize="10" FontWeight="Bold">
+                            <Grid Background="White"/>
+                        </TabItem>
                 </TabControl>
             </Border>
         </Grid>

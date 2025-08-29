@@ -214,19 +214,9 @@
                                 Style="{StaticResource RoundedButtonStyle}"/>
 
                         <!-- Update Info -->
-                        <TextBlock x:Name="lblUpdate"
-                                   Visibility="Visible"
-                                   Grid.Row="3"
-                                   FontSize="10"
-                                   Foreground="#009688"
-                                   Margin="6,4,0,40" FontWeight="SemiBold" TextAlignment="Center" HorizontalAlignment="Left"><Run Text="🔔 Update Available : "/><Run Text=" "/><Run Text="Click to install."/></TextBlock>
 
                         <!-- Admin Info -->
-                        <TextBlock Text="For any assistance contact admin"
-                                   FontSize="10"
-                                   Foreground="#8A8A8A" Margin="6,43,82,0" Grid.Row="3"/>
                         <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Grid.Row="4" VerticalAlignment="Center" Height="15">
-                            <TextBlock Text="CALSTO :" FontSize="9" Foreground="#8A8A8A" Height="15" Width="40"/>
                             <TextBlock x:Name="lblVersion" FontSize="9" Foreground="#8A8A8A" Height="15" Width="35"/>
                             <Ellipse x:Name="dbStatusIndicator"
                                 Height="10"
