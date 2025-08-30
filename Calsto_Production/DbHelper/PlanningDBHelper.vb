@@ -34,7 +34,7 @@ Public Class PlanningDBHelper
     Public Shared Function GetBOMItems(bomNo As String) As List(Of PlanningSideDgModel)
         Dim result As New List(Of PlanningSideDgModel)
         Using con As New SqlConnection(conString)
-            Dim cmd As New SqlCommand("SELECT * FROM v_MT_PPC WHERE [BOM No.] = @BOMNo", con)
+            Dim cmd As New SqlCommand("SELECT * FROM V_JOB_PLANNING WHERE [BOM No.] = @BOMNo", con)
             cmd.Parameters.AddWithValue("@BOMNo", bomNo)
             con.Open()
             Using rdr = cmd.ExecuteReader()
@@ -45,7 +45,7 @@ Public Class PlanningDBHelper
                         .BOMName = rdr("BOM Name").ToString(),
                         .Customer = rdr("Customer").ToString(),
                         .Description = rdr("Description").ToString(),
-                        .Assigned = rdr("Assinged").ToString(),
+                        .Assigned = rdr("old").ToString(),
                         .BOMQty = Convert.ToInt32(rdr("BOM Qty")),
                         .Colour = rdr("Colour").ToString(),
                         .Process = rdr("Process").ToString(),

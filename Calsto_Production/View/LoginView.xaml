@@ -76,10 +76,11 @@
                 <Grid Margin="0,4,0,8">
                     <PasswordBox x:Name="txtPassword" Height="32" FontSize="12"
                                  Background="#ECF0F1" BorderThickness="0" Padding="8"/>
+                    
                     <Button x:Name="btnTogglePassword" Content="👁️" Width="28" Height="28"
                             HorizontalAlignment="Right" VerticalAlignment="Center"
                             Background="Transparent" BorderThickness="0"
-                            Cursor="Hand"/>
+                            Cursor="Hand" Click="btnTogglePassword_Click"/>
                 </Grid>
 
                 <!-- Caps Lock -->
@@ -97,9 +98,7 @@
                            HorizontalAlignment="Center" Margin="0,12,0,50"
                            Cursor="Hand" TextDecorations="Underline"/>
 
-                <TextBlock Text="Powered By" FontSize="11" Foreground="#2980B9"
-           HorizontalAlignment="Center" Margin="0,12,0,0"
-           Cursor="Hand"/>
+                
 
                 <Image Source="pack://application:,,,/Resources/CA_Storage_Logo-removebg-preview.png"
 Width="120" Height="50" HorizontalAlignment="Center" Margin="0,0,0,0"/>

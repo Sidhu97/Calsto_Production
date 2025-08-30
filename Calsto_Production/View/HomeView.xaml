@@ -4,18 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="HomeView" 
+        Title="CALSTO_Production" 
         Height="900" Width="1350"
         WindowStartupLocation="CenterScreen"
         Background="#F5F5F5"
         WindowState="Maximized">
     <Window.Resources>
         <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="LightGray" Offset="0"/>
+            
             <GradientStop Color="white" Offset="1"/>
         </LinearGradientBrush>
 
-        <DropShadowEffect x:Key="ModernShadow" BlurRadius="10" ShadowDepth="1" Color="#33000000"/>
+        <DropShadowEffect x:Key="ModernShadow" BlurRadius="5" ShadowDepth="1" Color="LightGray" />
 
         <Style x:Key="ModernIconButton" TargetType="Button">
             <Setter Property="Background" Value="#4CFFFFFF"/>
@@ -55,7 +55,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -71,29 +71,29 @@
 
                     <!-- Left Logo -->
                     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="22,0,0,0">
-                        <Image Source="/Resources/CALSTO-NEW.png" Width="110" Height="22" Margin="0,0,10,0"/>
+                        <Image Source="/Resources/CALSTO-NEW.png" Width="110" Height="25" Margin="0,0,10,0"/>
                     </StackPanel>
 
                     <!-- Title -->
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <TextBlock Text="PRODUCTION TRACKER (PU4)" FontFamily="Calibri" FontWeight="Bold" FontSize="20" Foreground="#FF0088AA" Margin="15,0,0,2"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="center">
+                        <TextBlock Text="CRAFTSMAN STORAGE SYSTEMS-PRODUCTION TRACKER" FontFamily="Calibri" FontWeight="Bold" FontSize="22" Foreground="#FF0088AA" Margin="15,0,0,2"/>
                     </StackPanel>
 
                     <!-- User + Tools -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,24,0">
 
                         <!-- Avatar -->
-                        <Ellipse Width="20" Height="20" Margin="0,0,8,0" Stroke="#E0F7FA" StrokeThickness="1.1">
+                        <Ellipse Width="25" Height="25" Margin="0,0,8,0" Stroke="#E0F7FA" StrokeThickness="1.1">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="/Resources/profile (1).png"/>
                             </Ellipse.Fill>
                         </Ellipse>
 
                         <!-- Username -->
-                        <TextBlock x:Name="loggeduser" Text="User" FontSize="11" FontWeight="SemiBold" Foreground="#FF540F0F" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="loggeduser" Text="User" FontSize="14" FontWeight="SemiBold" Foreground="Black" VerticalAlignment="Center" Margin="0,0,20,0"/>
 
                         <!-- Company Logo -->
-                        <Image Width="100" Height="28" Stretch="Uniform" VerticalAlignment="Center" Source="/Resources/CA_Storage_Logo-removebg-preview.png"/>
+                        <Image Width="120" Height="35" Stretch="Uniform" VerticalAlignment="Center" Source="/Resources/CA_Storage_Logo-removebg-preview.png"/>
 
                         <!-- Logout Button -->
                     </StackPanel>
@@ -105,13 +105,21 @@
         <Grid Grid.Row="1">
             <Border Margin="5" Background="White"  BorderBrush="#E0E0E0" BorderThickness="1" Effect="{StaticResource ModernShadow}">
                 <TabControl x:Name="HomeTabControl" Background="Transparent" BorderThickness="0" Padding="6" Margin="0,0,-5,0" FontFamily="Segoe UI" FontSize="15">
+                    
+                    
                     <TabItem x:Name="TabDashboard" Header="DASHBOARD" FontSize="9" FontWeight="Bold">
                         <Frame Source="Pages/Dashboard.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
                     <TabItem x:Name="TabPlanning" Header="PLANNING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Planning.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
-                    
+
+                    <TabItem x:Name="TabPlanningAP" Header="PLANNING-ALL PORJECTS" FontSize="10" FontWeight="Bold">
+                        <Frame Source="Pages/Planning.xaml" NavigationUIVisibility="Hidden"/>
+                    </TabItem>
+
+
+
                     <TabItem x:Name="TabForming" Header="FORMING" FontSize="10" FontWeight="Bold">
                         <Frame Source="Pages/Forming.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>

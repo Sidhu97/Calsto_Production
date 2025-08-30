@@ -115,7 +115,7 @@
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="3.2*"/>
         </Grid.ColumnDefinitions>
 
@@ -143,7 +143,7 @@
             CanUserSortColumns="True"
             Grid.Column="0">
             <control:FilterDataGrid.Columns>
-                <control:DataGridTextColumn Header="BOM No." Binding="{Binding PROJECTNO}" Width="70" IsColumnFiltered="True">
+                <control:DataGridTextColumn Header="BOM" Binding="{Binding PROJECTNO}" Width="70" IsColumnFiltered="True">
                     <control:DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CellTextStyle}">
                             <Setter Property="FontWeight" Value="Bold"/>
@@ -152,13 +152,13 @@
                     </control:DataGridTextColumn.ElementStyle>
                 </control:DataGridTextColumn>
 
-                <control:DataGridTextColumn Header="Customer" Binding="{Binding Customer}" Width="250" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                <control:DataGridTextColumn Header="PPC Status" Binding="{Binding Status}"  Width="130" IsColumnFiltered="True" ElementStyle="{StaticResource PPCStatusStyle}" />
+                <control:DataGridTextColumn Header="Customer Name" Binding="{Binding Customer}" Width="250" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                <control:DataGridTextColumn Header="Job Status" Binding="{Binding Status}"  Width="130" IsColumnFiltered="True" ElementStyle="{StaticResource PPCStatusStyle}" />
             </control:FilterDataGrid.Columns>
         </control:FilterDataGrid>
 
         <!-- Splitter -->
-        <GridSplitter Grid.Column="1" Width="10" Background="#ddd" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" Width="5" Background="#ddd" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
         <!-- Details and StockIn Panel -->
         <Grid Grid.Column="2" Margin="0">

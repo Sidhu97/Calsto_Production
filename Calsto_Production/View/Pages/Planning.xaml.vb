@@ -98,8 +98,8 @@ Public Class Planning
             MessageBox.Show("Please select at least one item to create a job card.")
             Exit Sub
         End If
-
-        Dim createdBy As String = Environment.UserName
+        Dim currentUser = AppSession.CurrentUser
+        Dim createdBy As String = currentUser.Name
 
         Dim progressWindow As New JobProgress()
         progressWindow.Show()

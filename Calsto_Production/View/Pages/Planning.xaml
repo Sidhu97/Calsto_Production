@@ -68,7 +68,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Status}" Value="BOM Not Available">
-                    <Setter Property="Foreground" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="Gray"/>
                     
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Status}" Value="PPC Released">
@@ -131,7 +131,7 @@
         <!-- Details and StockIn Panel -->
         <Grid Grid.Column="2" Margin="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="AUTO"/>
                 <RowDefinition/>
                 <RowDefinition Height="140"/>
             </Grid.RowDefinitions>
@@ -154,17 +154,17 @@
 
                 <DockPanel Grid.Row="0" Margin="0,0,0,0" >
                     <!-- Details DataGrid -->
-                    <TextBlock Text="Project No:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="10,0,8,8"/>
-                    <TextBlock x:Name ="txt_Projectno" Grid.Row="0"  FontWeight="SemiBold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
-                    <TextBlock Text="Customer Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold" Margin="10,0,8,8"/>
+                    <TextBlock Text="Project No:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,8,8"/>
+                    <TextBlock x:Name ="txt_Projectno" Grid.Row="0"  FontWeight="Bold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
+                    <TextBlock Text="Customer Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,8,8"/>
 
-                    <TextBlock x:Name ="txt_Customer"  FontWeight="SemiBold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
+                    <TextBlock x:Name ="txt_Customer"  FontWeight="Bold" FontSize="15" Foreground="DarkCyan" Grid.Column="0" VerticalAlignment="Center"  Margin="0,0,8,8"/>
                     
 
 
                 </DockPanel>
 
-                <CheckBox x:Name="SelectAllFilteredCheckBox" Grid.Row="0" Grid.Column="1" Content="Select all Item" DockPanel.Dock="Right" Width="130" VerticalAlignment="Center" Checked="BtnSelectAll_Click" Unchecked="BtnClearSelection_Click" Margin="0,0,0,0"/>
+                
                 <!-- Details DataGrid -->
             <control:FilterDataGrid 
     x:Name="WIDBOMDG"
@@ -191,9 +191,10 @@
                 <control:FilterDataGrid.Columns>
                         
                         <control:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="300" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Assigned" Binding="{Binding Assigned}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                   
                     <control:DataGridTextColumn Header="BOM Qty" Binding="{Binding BOMQty}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                    <control:DataGridTextColumn Header="Process" Binding="{Binding Process}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="old" FontWeight="SemiBold" Binding="{Binding Assigned}" Width="110" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Process" FontWeight="SemiBold" Binding="{Binding Process}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Colour" Binding="{Binding Colour}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Packing Balance" Binding="{Binding PackingBalance}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     <control:DataGridTextColumn Header="Dispatched Qty" Binding="{Binding DispatchQty}" Width="90" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
@@ -243,8 +244,9 @@
                         <Grid>
                             
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="60"/>
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="50"/>
@@ -252,13 +254,13 @@
                                
                             </Grid.RowDefinitions>
 
-                            
-                            
-                            <Button Content="Create Jobs" Grid.Row="0" Width="80" Height="30" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  Margin="0,0,0,0" Click="CreateJobButton_Click" />
-                            <TextBlock Text="For Selected Items" Grid.Row="1"  FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center" Foreground="#222" Margin="0,0,0,0" />
-                            <TextBlock Text="Process Change" Grid.Row="2" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
-                            <ComboBox x:Name="Process_combo" Grid.Row="3" FontWeight="SemiBold" FontSize="13" Width="80" Foreground="#222" Margin="0,0,0,0" />
-                            <Button Content="Apply" Grid.Row="4"  Width="80" Height="30" Margin="0,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
+
+                            <CheckBox x:Name="SelectAllFilteredCheckBox" Grid.Row="0" Grid.Column="1" Content="Select all Item" DockPanel.Dock="Right" HorizontalAlignment="Center" Checked="BtnSelectAll_Click" Unchecked="BtnClearSelection_Click" Margin="0,0,0,0"/>
+                            <Button Content="Create Jobs" Grid.Row="1" Width="80" Height="30" Background="#007AFF" Foreground="White" FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"  Margin="0,0,0,0" Click="CreateJobButton_Click" />
+                            <TextBlock Text="For Selected Items" Grid.Row="2"  FontWeight="SemiBold" FontSize="10" HorizontalAlignment="Center" Foreground="#222" Margin="0,0,0,0" />
+                            <TextBlock Text="Process Change" Grid.Row="3" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13" Foreground="#222" Margin="0,0,0,0" />
+                            <ComboBox x:Name="Process_combo" Grid.Row="4" FontWeight="SemiBold" FontSize="13" Width="80" Foreground="#222" Margin="0,0,0,0" />
+                            <Button Content="Apply" Grid.Row="5"  Width="80" Height="30" Margin="0,0,0,0" Background="#007AFF" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" BorderThickness="0" Cursor="Hand"  />
                             
 
                         </Grid>
@@ -274,13 +276,14 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="800" />
+                    <ColumnDefinition Width="60" />
 
                 </Grid.ColumnDefinitions>
 
                 <control:FilterDataGrid 
                     x:Name="JobcardDG"
-                   
+                    Grid.Column="1"
                     AutoGenerateColumns="False"    
                     ShowRowsCount="True"
                     CanUserAddRows="False"
@@ -302,13 +305,13 @@
                         <control:DataGridTextColumn Header="Job Card" Binding="{Binding JC_no}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                         <control:DataGridTextColumn Header="WID" Binding="{Binding WID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                         <control:DataGridTextColumn Header="Operation" Binding="{Binding Operation_ID}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Created On" Binding="{Binding Created_date, StringFormat=\{0:dd-MM-yyyy\}}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        <control:DataGridTextColumn Header="Created On" Binding="{Binding Created_date}" Width="150" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                         <control:DataGridTextColumn Header="Created by" Binding="{Binding Created_by}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
-                        <control:DataGridTextColumn Header="Available" Binding="{Binding Ready_qty}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
+                        
                         <control:DataGridTextColumn Header="Completed" Binding="{Binding Job_Qty}" Width="100" IsColumnFiltered="True" ElementStyle="{StaticResource CellTextStyle}" />
                     </control:FilterDataGrid.Columns>
                 </control:FilterDataGrid>
-                <Button Content="Delete Jobs" Grid.Column="1"  Margin="0,0,0,0" Background="red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand" Click="DeleteJobButton_Click"/>
+                <Button Content="Delete Jobs" Grid.Column="2"  Margin="0,0,0,0" Background="red" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left" BorderThickness="0" Cursor="Hand" Click="DeleteJobButton_Click"/>
             </Grid>
 
         </Grid>

@@ -35,7 +35,7 @@ Public Class Dashboard
         Dim selectedProject As DashboardModel = TryCast(DashDG.SelectedItem, DashboardModel)
         If selectedProject IsNot Nothing Then
             LoadProjectSideDetails(selectedProject.BOM_No) ' or .PRO_No
-            dpDispatchDate.SelectedDate = selectedProject.Dispatch_Date
+            dpDispatchDate.SelectedDate = selectedProject.PO_Dispatch_Date
         End If
     End Sub
 

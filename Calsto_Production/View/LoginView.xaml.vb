@@ -8,7 +8,11 @@ Imports System.Configuration
 Class LoginView
 
     Private isPasswordVisible As Boolean = False
-    Private txtPasswordVisible As TextBox = Nothing
+    Private txtPasswordVisible As New TextBox() With {
+    .Visibility = Visibility.Collapsed,
+    .Margin = New Thickness(0),
+    .Padding = New Thickness(0)
+}
 
     ' App version and product (optional for version check)
     Private ReadOnly AppVersion As String = ConfigurationManager.AppSettings("AppVersion")
@@ -65,6 +69,7 @@ Class LoginView
 
         If user IsNot Nothing Then
             Login_Home_Dbhelper.LogLogin(user.UserID, True, "Login success")
+            AppSession.CurrentUser = user
             Dim homeWindow As New HomeView(user)
             homeWindow.Show()
             Me.Close()
@@ -85,25 +90,30 @@ Class LoginView
 
 
     Private Sub btnTogglePassword_Click(sender As Object, e As RoutedEventArgs) Handles btnTogglePassword.Click
-        isPasswordVisible = Not isPasswordVisible
         Dim dockPanel = TryCast(txtPassword.Parent, DockPanel)
         If dockPanel Is Nothing Then Return
 
-        If isPasswordVisible Then
-            txtPasswordVisible.Text = txtPassword.Password
-            txtPassword.Visibility = Visibility.Collapsed
+        ' Ensure the visible textbox is in the layout once
+        If Not dockPanel.Children.Contains(txtPasswordVisible) Then
+            Dim index As Integer = dockPanel.Children.IndexOf(txtPassword)
+            dockPanel.Children.Insert(index, txtPasswordVisible)
+        End If
 
-            If Not dockPanel.Children.Contains(txtPasswordVisible) Then
-                dockPanel.Children.Insert(2, txtPasswordVisible)
-            End If
-            txtPasswordVisible.Visibility = Visibility.Visible
-            btnTogglePassword.Content = "🙈"
-        Else
+        If isPasswordVisible Then
+            ' Hide plain text, show PasswordBox
             txtPassword.Password = txtPasswordVisible.Text
             txtPassword.Visibility = Visibility.Visible
             txtPasswordVisible.Visibility = Visibility.Collapsed
-            btnTogglePassword.Content = "👁️"
+            btnTogglePassword.Content = "👁️" ' Show
+        Else
+            ' Show plain text, hide PasswordBox
+            txtPasswordVisible.Text = txtPassword.Password
+            txtPassword.Visibility = Visibility.Collapsed
+            txtPasswordVisible.Visibility = Visibility.Visible
+            btnTogglePassword.Content = "🙈" ' Hide
         End If
+
+        isPasswordVisible = Not isPasswordVisible
     End Sub
 
     Private Sub txtPasswordVisible_TextChanged(sender As Object, e As TextChangedEventArgs)
@@ -124,13 +134,8 @@ Class LoginView
         MessageBox.Show("Please contact admin.", "Forgot Password", MessageBoxButton.OK, MessageBoxImage.Information)
     End Sub
 
-    Private Sub label_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles label.MouseDown
-        Me.Close()
-        Application.Current.Shutdown()
-    End Sub
 
-
-    Private Sub btnClose_Click(sender As Object, e As MouseButtonEventArgs)
+    Private Sub btnClose_Click()
         Me.Close()
         Application.Current.Shutdown()
     End Sub
